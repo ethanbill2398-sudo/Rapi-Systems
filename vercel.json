@@ -102,11 +102,6 @@
       "source": "/quote",
       "destination": "/contact",
       "permanent": true
-    },
-    {
-      "source": "/admin",
-      "destination": "/admin/",
-      "permanent": false
     }
   ]
 }
