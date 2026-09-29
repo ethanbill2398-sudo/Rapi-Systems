@@ -1,0 +1,29 @@
+---
+// Steers buyers to Griffin Ag installation while stating any qualified crew can install.
+import Icon from './Icon.astro';
+import { getSettings } from '../lib/site';
+interface Props { variant?: 'light' | 'dark'; id?: string }
+const { variant = 'light', id = 'installer' } = Astro.props;
+const { installer: i } = await getSettings();
+const dark = variant === 'dark';
+---
+<section
+  class:list={['reveal relative overflow-hidden rounded-[4px]', dark ? 'on-dark bg-forest text-white' : 'border border-line bg-white']}
+  aria-labelledby={`${id}-h`}
+>
+  <span aria-hidden="true" class="absolute inset-y-0 left-0 w-1.5 bg-field"></span>
+  <div class="grid gap-6 p-6 pl-8 md:grid-cols-[auto_1fr_auto] md:items-center md:gap-8 md:p-8 md:pl-10">
+    <span class:list={['badge size-16', dark && 'bg-deep ring-2 ring-field/60']}><Icon name="hard-hat" class="size-8" /></span>
+    <div>
+      <h2 id={`${id}-h`} class="text-3xl md:text-4xl">{i.heading}</h2>
+      <p class:list={['mt-3 max-w-2xl text-lg', dark ? 'text-white/90' : 'text-ink']}>{i.text}</p>
+      <p class:list={['mt-2 max-w-2xl text-sm', dark ? 'text-on-dark-muted' : 'text-muted']}>{i.note}</p>
+    </div>
+    <div class="flex flex-col items-start gap-3 md:items-end">
+      <a href={i.url} target="_blank" rel="noopener" class:list={['btn btn-outline', dark ? 'text-white' : 'text-forest']} data-cta={`${id}-griffin`}>
+        Visit {i.name} <Icon name="arrow-right" class="size-5 -rotate-45" /><span class="sr-only"> (opens in a new tab)</span>
+      </a>
+      <a href="/contact#f-install" class="link inline-flex min-h-11 items-center">Ask for installation in your quote</a>
+    </div>
+  </div>
+</section>

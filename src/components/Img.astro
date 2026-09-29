@@ -1,0 +1,10 @@
+---
+// AVIF with WebP fallback for every raster image. Same props as astro:assets <Image>.
+import { Picture } from 'astro:assets';
+import type { ComponentProps } from 'astro/types';
+type PictureProps = ComponentProps<typeof Picture>;
+type Props = Omit<PictureProps, 'formats'>;
+const { quality = 62, ...rest } = Astro.props;
+const props = { ...rest, quality, formats: ['avif', 'webp'] } as PictureProps;
+---
+<Picture {...props} />

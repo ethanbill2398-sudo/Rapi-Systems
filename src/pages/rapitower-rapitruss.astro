@@ -1,0 +1,237 @@
+---
+import Image from '../components/Img.astro';
+import { getEntry, getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import InstallerCallout from '../components/InstallerCallout.astro';
+import { flagPlaceholders } from '../lib/site';
+import { breadcrumbs, faqPage, product } from '../lib/schema';
+
+const { data: d } = (await getEntry('product', 'product'))!;
+const products = await Promise.all(
+  (await getCollection('products'))
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (p) => ({ ...p, Content: (await render(p)).Content })),
+);
+const site = Astro.site!;
+const schema = [
+  breadcrumbs(site, [{ name: 'RapiTower & RapiTruss', path: '/rapitower-rapitruss' }]),
+  faqPage(d.faq.items),
+  ...products.map((p) => product(site, { name: p.data.name, description: p.data.schemaDescription, image: p.data.image.src.src, anchor: p.data.anchor })),
+];
+---
+<Base title={d.seo.title} description={d.seo.description} schema={schema}>
+  <PageHero heading={d.hero.heading} subheading={d.hero.subheading} image={d.hero.image} eyebrow="Product & engineering">
+    <div class="mt-8 flex flex-wrap gap-4">
+      <a href="/contact" class="btn btn-primary" data-cta="product-hero">Request a Quote</a>
+      <a href="#specifications" class="btn btn-outline text-white">Specifications</a>
+    </div>
+  </PageHero>
+
+  <!-- How it works -->
+  <section class="section" aria-labelledby="system-h">
+    <div class="container-x grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-start lg:gap-16">
+      <div class="reveal lg:sticky lg:top-28">
+        <h2 id="system-h" class="text-4xl text-forest md:text-5xl">{d.system.heading}</h2>
+        <span class="bar"></span>
+        <p class="mt-6 text-lg">{d.system.body}</p>
+        <figure class="mt-8 rounded-[4px] border border-line bg-white p-4">
+          <Image src={d.system.image.src} alt={d.system.image.alt} widths={[480, 720, 960]} sizes="(min-width: 1024px) 50vw, 100vw" class="h-auto w-full" />
+          <figcaption class="mt-2 text-sm text-muted">RapiTower and RapiTruss components, Griffin Ag Services Ltd.</figcaption>
+        </figure>
+      </div>
+      <ul class="reveal-stagger grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+        {d.system.points.map((pt) => (
+          <li class="flex gap-5 rounded-[4px] bg-mist p-6">
+            <span class="badge"><Icon name={pt.icon} /></span>
+            <div>
+              <h3 class="text-2xl">{pt.title}</h3>
+              <p class="mt-1 text-muted">{pt.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section class="bg-mist py-16 md:py-24" aria-labelledby="lineup-h">
+    <div class="container-x">
+      <div class="reveal max-w-2xl">
+        <h2 id="lineup-h" class="text-4xl md:text-5xl">The lineup</h2>
+        <span class="bar"></span>
+        <p class="mt-6 text-lg text-muted">All galvanized. All bolt together.</p>
+      </div>
+      <div class="mt-12 grid gap-6 md:grid-cols-2">
+        {products.map(({ data: p, Content }) => (
+          <article id={p.anchor} class="reveal scroll-mt-28 overflow-hidden rounded-[4px] bg-white">
+            <Image src={p.image.src} alt={p.image.alt} widths={[480, 720, 960]} sizes="(min-width: 768px) 50vw, 100vw" class="aspect-[16/10] w-full object-cover" />
+            <div class="p-6 md:p-8">
+              <h3 class="text-3xl text-forest">{p.name}</h3>
+              <span class="bar w-10"></span>
+              <div class="mt-4 text-muted"><Content /></div>
+              <ul class="mt-5 grid gap-2">
+                {p.highlights.map((h) => <li class="flex items-start gap-2"><Icon name="check" class="mt-1 size-5 shrink-0 text-forest" /> {h}</li>)}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Step diagram -->
+  <section class="on-dark slant-bottom bg-deep pt-16 pb-28 text-white md:pt-24 md:pb-36" aria-labelledby="steps-h">
+    <div class="container-x">
+      <div class="reveal max-w-2xl">
+        <h2 id="steps-h" class="text-4xl md:text-5xl">{d.steps.heading}</h2>
+        <span class="bar"></span>
+      </div>
+      <ol class="steps reveal relative mt-14 grid gap-10 md:gap-6" style={`--n:${d.steps.items.length}`}>
+        <span aria-hidden="true" class="steps-line"></span>
+        {d.steps.items.map((st, i) => (
+          <li class="step relative flex gap-5 md:flex-col md:items-center md:text-center" style={`--i:${i}`}>
+            <span class="relative z-10 grid size-16 shrink-0 place-items-center rounded-full border-2 border-field bg-forest text-white">
+              <Icon name={st.icon} class="size-7" />
+            </span>
+            <div>
+              <h3 class="text-2xl"><span class="sr-only">Step {i + 1}: </span>{st.title}</h3>
+              <p class="mt-1 text-on-dark-muted">{st.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Recommended installer -->
+  <div class="container-x -mt-10 relative md:-mt-16">
+    <InstallerCallout id="product-installer" />
+  </div>
+
+  <!-- Bolted vs welded -->
+  <section class="section" aria-labelledby="compare-h">
+    <div class="container-x">
+      <div class="reveal max-w-2xl">
+        <h2 id="compare-h" class="text-4xl md:text-5xl">{d.comparison.heading}</h2>
+        <span class="bar"></span>
+        <p class="mt-6 text-lg text-muted">{d.comparison.text}</p>
+      </div>
+      <div class="reveal mt-10 overflow-x-auto rounded-[4px] border border-line">
+        <table class="w-full min-w-[640px] border-collapse text-left">
+          <caption class="sr-only">Comparison of RapiSYSTEMS bolted structure and custom welded structure</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="w-1/4 bg-mist p-4 font-display text-lg uppercase"><span class="sr-only">Factor</span></th>
+              <th scope="col" class="bg-forest p-4 font-display text-xl text-white uppercase">RapiSYSTEMS bolted</th>
+              <th scope="col" class="bg-mist p-4 font-display text-xl uppercase">Custom welded</th>
+            </tr>
+          </thead>
+          <tbody>
+            {d.comparison.rows.map((r) => (
+              <tr class="border-t border-line">
+                <th scope="row" class="p-4 font-semibold">{r.label}</th>
+                <td class="bg-forest/[0.06] p-4"><span class="flex items-start gap-2"><Icon name="check" class="mt-1 size-5 shrink-0 text-forest" />{r.bolted}</span></td>
+                <td class="p-4 text-muted">{r.welded}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specs -->
+  <section id="specifications" class="scroll-mt-24 bg-mist py-16 md:py-24" aria-labelledby="specs-h">
+    <div class="container-x">
+      <div class="reveal max-w-2xl">
+        <h2 id="specs-h" class="text-4xl md:text-5xl">{d.specs.heading}</h2>
+        <span class="bar"></span>
+        <p class="mt-6 text-muted">{d.specs.note}</p>
+      </div>
+      <div class="reveal-stagger mt-10 grid gap-6 lg:grid-cols-3">
+        {d.specs.groups.map((g) => (
+          <div class="rounded-[4px] bg-white p-6 md:p-8">
+            <h3 class="text-2xl text-forest">{g.title}</h3>
+            <dl class="mt-4 grid gap-4">
+              {g.rows.map((r) => (
+                <div>
+                  <dt class="text-sm font-semibold tracking-wide text-muted uppercase">{r.label}</dt>
+                  <dd class="mt-0.5 text-lg" set:html={flagPlaceholders(r.value)} />
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))}
+      </div>
+      <div class="reveal mt-10">
+        <h3 class="text-2xl">Downloads</h3>
+        <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {d.specs.downloads.map((f) => (
+            <li>
+              <a href={f.file} download class="card-lift flex min-h-16 items-center gap-4 rounded-[4px] border border-line bg-white p-4 font-semibold">
+                <span class="grid size-11 place-items-center rounded-full bg-forest text-white"><Icon name="download" class="size-5" /></span>
+                <span>{f.label}<span class="block text-sm font-normal text-muted">{f.format}{f.size && `, ${f.size}`}</span></span>
+              </a>
+            </li>
+          ))}
+          <li class="flex min-h-16 items-center gap-4 rounded-[4px] border border-dashed border-muted/50 p-4 text-muted">
+            <span class="grid size-11 place-items-center rounded-full bg-line"><Icon name="download" class="size-5" /></span>
+            <span set:html={flagPlaceholders('[SPEC: engineering spec sheet PDF TBD]')} />
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" aria-labelledby="faq-h">
+    <div class="container-x grid gap-10 lg:grid-cols-[1fr_1.6fr]">
+      <div class="reveal">
+        <h2 id="faq-h" class="text-4xl md:text-5xl">{d.faq.heading}</h2>
+        <span class="bar"></span>
+        <p class="mt-6 text-muted">Don't see your question? <a href="/contact" class="link">Ask us</a>.</p>
+      </div>
+      <div class="reveal divide-y divide-line border-y border-line">
+        {d.faq.items.map((q) => (
+          <details class="faq group">
+            <summary class="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 text-lg font-semibold">
+              {q.question}
+              <Icon name="caret-down" class="size-5 shrink-0 text-forest transition-transform duration-200 group-open:rotate-180" />
+            </summary>
+            <p class="max-w-[65ch] pb-5 text-muted">{q.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand heading={d.cta.heading} text={d.cta.text} id="product" />
+</Base>
+
+<style>
+  .steps { grid-template-columns: 1fr; }
+  .steps-line {
+    position: absolute; left: 2rem; top: 2rem; bottom: 2rem; width: 2px;
+    background: var(--color-field); transform-origin: top;
+  }
+  @media (min-width: 768px) {
+    .steps { grid-template-columns: repeat(var(--n), minmax(0, 1fr)); }
+    .steps-line { left: calc(50% / var(--n)); right: calc(50% / var(--n)); top: 2rem; bottom: auto; width: auto; height: 2px; transform-origin: left; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .steps.reveal-armed { opacity: 1; transform: none; }
+    .steps.reveal-armed .steps-line { transform: scaleY(0); transition: transform 1200ms var(--ease-in-out); }
+    @media (min-width: 768px) { .steps.reveal-armed .steps-line { transform: scaleX(0); } }
+    .steps.reveal-armed .step { opacity: 0; transform: translateY(12px); transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out); transition-delay: calc(var(--i) * 200ms + 150ms); }
+    .steps.reveal-armed.is-visible .steps-line { transform: none; }
+    .steps.reveal-armed.is-visible .step { opacity: 1; transform: none; }
+  }
+  details.faq summary::-webkit-details-marker { display: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    details.faq::details-content { transition: height 240ms var(--ease-out), content-visibility 240ms allow-discrete; height: 0; overflow: clip; }
+    details.faq[open]::details-content { height: auto; }
+  }
+</style>

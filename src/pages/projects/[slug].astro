@@ -1,0 +1,145 @@
+---
+import Image from '../../components/Img.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { getImage } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import VideoFacade from '../../components/VideoFacade.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import InstallerCallout from '../../components/InstallerCallout.astro';
+import { projectCategories } from '../../content.config';
+import { breadcrumbs } from '../../lib/schema';
+import { flagPlaceholders } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', (p) => !p.data.draft);
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+interface Props { project: CollectionEntry<'projects'> }
+const { project } = Astro.props;
+const p = project.data;
+const { Content } = await render(project);
+const images = [p.cover, ...p.gallery];
+const large = await Promise.all(images.map((img) => getImage({ src: img.src, width: 1600, format: 'webp', quality: 72 })));
+const og = await getImage({ src: p.cover.src, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 80 });
+---
+<Base
+  title={p.seo.title}
+  description={p.seo.description}
+  ogImage={og.src}
+  schema={[breadcrumbs(Astro.site!, [{ name: 'Projects', path: '/projects' }, { name: p.title, path: `/projects/${project.id}` }])]}
+>
+  <article>
+    <header class="bg-mist pt-10 pb-12 md:pt-14">
+      <div class="container-x">
+        <nav aria-label="Breadcrumb" class="text-sm">
+          <ol class="flex flex-wrap items-center gap-1 text-muted">
+            <li><a href="/" class="inline-flex min-h-11 min-w-11 items-center hover:text-forest hover:underline">Home</a></li>
+            <li aria-hidden="true"><Icon name="caret-right" class="size-3" /></li>
+            <li><a href="/projects" class="inline-flex min-h-11 items-center hover:text-forest hover:underline">Projects</a></li>
+            <li aria-hidden="true"><Icon name="caret-right" class="size-3" /></li>
+            <li aria-current="page" class="text-ink">{p.title}</li>
+          </ol>
+        </nav>
+        <h1 class="mt-6 max-w-4xl text-5xl text-forest md:text-6xl">{p.title}</h1>
+        <span class="bar"></span>
+        <dl class="mt-8 grid gap-6 sm:grid-cols-3">
+          <div><dt class="text-sm font-semibold tracking-wide text-muted uppercase">Type</dt><dd class="mt-1 text-lg">{projectCategories[p.category]}</dd></div>
+          <div><dt class="text-sm font-semibold tracking-wide text-muted uppercase">Location</dt><dd class="mt-1 text-lg" set:html={flagPlaceholders(p.location)} /></div>
+          <div><dt class="text-sm font-semibold tracking-wide text-muted uppercase">Scope</dt><dd class="mt-1 text-lg" set:html={flagPlaceholders(p.scope)} /></div>
+        </dl>
+      </div>
+    </header>
+
+    <div class="section pt-10 md:pt-14">
+      <div class="container-x grid gap-12 lg:grid-cols-[1.5fr_1fr]">
+        <div>
+          <ul class="grid grid-cols-2 gap-3" data-gallery>
+            {images.map((img, i) => (
+              <li class:list={[i === 0 && 'col-span-2']}>
+                <a href={large[i].src} class="group relative block overflow-hidden rounded-[4px] bg-mist" data-lightbox={i} data-alt={img.alt}>
+                  <Image src={img.src} alt={img.alt} widths={i === 0 ? [640, 960, 1280] : [400, 640]} sizes={i === 0 ? '(min-width: 1024px) 60vw, 100vw' : '(min-width: 1024px) 30vw, 50vw'} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} class:list={['w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]', i === 0 ? 'aspect-[16/10]' : 'aspect-square']} />
+                  <span class="sr-only">Open larger image</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <div class="prose-site project-body text-lg"><Content /></div>
+          {p.video && <div class="mt-8"><VideoFacade video={p.video} /></div>}
+          <a href="/contact" class="btn btn-primary mt-10" data-cta="project">Request a Quote</a>
+          <p class="mt-4"><a href="/projects" class="link inline-flex min-h-11 items-center gap-2"><Icon name="caret-left" class="size-4" /> All projects</a></p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <dialog class="lightbox m-auto h-dvh max-h-none w-screen max-w-none bg-deep/95 p-0 text-white backdrop:bg-deep/80" aria-label="Image viewer" data-lightbox-dialog>
+    <div class="flex h-full flex-col">
+      <div class="flex items-center justify-between p-2">
+        <p class="px-3 text-sm" data-lightbox-count aria-live="polite"></p>
+        <button type="button" class="grid size-12 place-items-center" data-lightbox-close><Icon name="x" class="size-7" /><span class="sr-only">Close</span></button>
+      </div>
+      <figure class="relative flex min-h-0 flex-1 flex-col items-center justify-center px-2 pb-4 md:px-20">
+        <img alt="" class="max-h-full max-w-full object-contain" data-lightbox-img />
+        <figcaption class="mt-3 max-w-2xl px-4 text-center text-sm text-on-dark-muted" data-lightbox-caption></figcaption>
+        <button type="button" class="absolute top-1/2 left-2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-deep/70" data-lightbox-prev><Icon name="caret-left" class="size-6" /><span class="sr-only">Previous image</span></button>
+        <button type="button" class="absolute top-1/2 right-2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-deep/70" data-lightbox-next><Icon name="caret-right" class="size-6" /><span class="sr-only">Next image</span></button>
+      </figure>
+    </div>
+  </dialog>
+
+  <div class="container-x pb-16 md:pb-24"><InstallerCallout id="project-installer" /></div>
+
+  <CtaBand heading="Planning something similar?" text="Tell us about your bins and equipment and we will quote the structure." id="project" />
+</Base>
+
+<style>
+  .project-body :global(p) { color: var(--color-muted); }
+  .lightbox[open] { animation: lb-in 200ms var(--ease-out); }
+  @keyframes lb-in { from { opacity: 0; } }
+</style>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox-dialog]');
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-lightbox]')];
+  if (dialog && links.length) {
+    const img = dialog.querySelector<HTMLImageElement>('[data-lightbox-img]')!;
+    const cap = dialog.querySelector<HTMLElement>('[data-lightbox-caption]')!;
+    const count = dialog.querySelector<HTMLElement>('[data-lightbox-count]')!;
+    const prev = dialog.querySelector<HTMLButtonElement>('[data-lightbox-prev]')!;
+    const next = dialog.querySelector<HTMLButtonElement>('[data-lightbox-next]')!;
+    let index = 0;
+    let opener: HTMLElement | null = null;
+    const show = (i: number) => {
+      index = (i + links.length) % links.length;
+      img.src = links[index].href;
+      img.alt = links[index].dataset.alt ?? '';
+      cap.textContent = img.alt;
+      count.textContent = `Image ${index + 1} of ${links.length}`;
+    };
+    prev.hidden = next.hidden = links.length < 2;
+    links.forEach((a, i) => a.addEventListener('click', (e) => {
+      e.preventDefault();
+      opener = a;
+      show(i);
+      dialog.showModal();
+    }));
+    prev.addEventListener('click', () => show(index - 1));
+    next.addEventListener('click', () => show(index + 1));
+    dialog.querySelector('[data-lightbox-close]')!.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('close', () => opener?.focus());
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(index - 1);
+      if (e.key === 'ArrowRight') show(index + 1);
+    });
+    let x0 = 0;
+    img.addEventListener('pointerdown', (e) => { x0 = e.clientX; });
+    img.addEventListener('pointerup', (e) => {
+      const dx = e.clientX - x0;
+      if (Math.abs(dx) > 40) show(index + (dx < 0 ? 1 : -1));
+    });
+  }
+</script>

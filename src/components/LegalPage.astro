@@ -1,0 +1,21 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { breadcrumbs } from '../lib/schema';
+interface Props { id: 'privacy' | 'terms' }
+const entry = (await getEntry('legal', Astro.props.id))!;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+<Base title={d.seo.title} description={d.seo.description} schema={[breadcrumbs(Astro.site!, [{ name: d.heading, path: `/${Astro.props.id}` }])]}>
+  <section class="bg-mist pt-14 pb-10 md:pt-20">
+    <div class="container-x">
+      <h1 class="text-5xl text-forest md:text-6xl">{d.heading}</h1>
+      <span class="bar"></span>
+      <p class="mt-5 text-sm text-muted">Last updated: {d.updated}</p>
+    </div>
+  </section>
+  <section class="section pt-10 md:pt-14">
+    <div class="container-x prose-site"><Content /></div>
+  </section>
+</Base>

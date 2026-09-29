@@ -1,0 +1,76 @@
+---
+import { getEntry, getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { projectCategories } from '../../content.config';
+import { breadcrumbs } from '../../lib/schema';
+
+const { data: d } = (await getEntry('projectsPage', 'projects'))!;
+const projects = (await getCollection('projects', (p) => !p.data.draft)).sort((a, b) => a.data.order - b.data.order);
+const used = new Set(projects.map((p) => p.data.category));
+const filters = Object.entries(projectCategories).filter(([k]) => used.has(k as keyof typeof projectCategories));
+---
+<Base title={d.seo.title} description={d.seo.description} schema={[breadcrumbs(Astro.site!, [{ name: 'Projects', path: '/projects' }])]}>
+  <section class="bg-mist pt-14 pb-10 md:pt-20">
+    <div class="container-x">
+      <h1 class="text-5xl text-forest md:text-7xl">{d.heading}</h1>
+      <span class="bar"></span>
+      <p class="mt-6 max-w-2xl text-lg text-muted">{d.intro}</p>
+    </div>
+  </section>
+
+  <section class="section pt-10 md:pt-12" aria-label="Project list">
+    <div class="container-x">
+      <div role="group" aria-label="Filter projects by type" class="flex flex-wrap gap-2" data-filters>
+        <button type="button" class="filter" aria-pressed="true" data-filter="all">All</button>
+        {filters.map(([key, label]) => <button type="button" class="filter" aria-pressed="false" data-filter={key}>{label}</button>)}
+      </div>
+      <p class="sr-only" aria-live="polite" data-filter-status></p>
+
+      {projects.length ? (
+        <div class="reveal-stagger mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-project-grid>
+          {projects.map((p) => <ProjectCard project={p} headingLevel="h2" />)}
+        </div>
+      ) : (
+        <p class="mt-10 rounded-[4px] border border-dashed border-line p-10 text-center text-muted">Projects are on the way. Add them in the CMS under Projects.</p>
+      )}
+    </div>
+  </section>
+
+  <CtaBand heading={d.cta.heading} text={d.cta.text} id="projects" />
+</Base>
+
+<style>
+  .filter {
+    min-height: 2.75rem; padding: 0 1.1rem; border: 2px solid var(--color-forest); border-radius: 2px;
+    font-weight: 600; color: var(--color-forest);
+    transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+  }
+  .filter:active { transform: scale(0.97); }
+  .filter[aria-pressed='true'] { background: var(--color-forest); color: #fff; }
+</style>
+
+<script>
+  const group = document.querySelector<HTMLElement>('[data-filters]');
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-project-grid] > [data-category]')];
+  const status = document.querySelector<HTMLElement>('[data-filter-status]');
+  const apply = (key: string) => {
+    let shown = 0;
+    group?.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === key)));
+    cards.forEach((c) => {
+      const match = key === 'all' || c.dataset.category === key;
+      c.hidden = !match;
+      if (match) { shown++; c.classList.add('is-visible'); }
+    });
+    if (status) status.textContent = `${shown} project${shown === 1 ? '' : 's'} shown`;
+  };
+  group?.addEventListener('click', (e) => {
+    const key = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-filter]')?.dataset.filter;
+    if (!key) return;
+    apply(key);
+    history.replaceState(null, '', key === 'all' ? location.pathname : `?type=${key}`);
+  });
+  const initial = new URLSearchParams(location.search).get('type');
+  if (initial && group?.querySelector(`[data-filter="${CSS.escape(initial)}"]`)) apply(initial);
+</script>

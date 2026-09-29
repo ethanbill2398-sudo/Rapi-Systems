@@ -1,0 +1,96 @@
+---
+import Image from '../components/Img.astro';
+import { getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { breadcrumbs } from '../lib/schema';
+import { getSettings } from '../lib/site';
+
+const { data: d } = (await getEntry('about', 'about'))!;
+const s = await getSettings();
+---
+<Base title={d.seo.title} description={d.seo.description} schema={[breadcrumbs(Astro.site!, [{ name: 'About', path: '/about' }])]}>
+  <PageHero heading={d.hero.heading} subheading={d.hero.subheading} image={d.hero.image} />
+
+  <!-- Story -->
+  <section class="section" aria-labelledby="story-h">
+    <div class="container-x grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-20">
+      <div class="reveal relative">
+        <Image src={d.story.image.src} alt={d.story.image.alt} widths={[400, 640, 800, 1000]} sizes="(min-width: 1024px) 45vw, 100vw" quality={42} class="aspect-[4/3] w-full rounded-[4px] object-cover lg:aspect-[4/5]" />
+        <div class="absolute -right-3 -bottom-6 w-44 rounded-[4px] border border-line bg-white p-3 shadow-[0_18px_40px_-20px_rgb(10_38_32/0.4)] sm:-right-6 sm:w-56">
+          <Image src={d.story.logo.src} alt={d.story.logo.alt} width={224} class="h-auto w-full" />
+        </div>
+      </div>
+      <div class="reveal">
+        <h2 id="story-h" class="text-4xl text-forest md:text-5xl">{d.story.heading}</h2>
+        <span class="bar"></span>
+        <p class="mt-6 text-lg">{d.story.body}</p>
+        <dl class="mt-10 grid grid-cols-2 gap-6 border-t border-line pt-8">
+          <div class="flex flex-col">
+            <dt class="order-2 text-sm text-muted">Years in agricultural construction</dt>
+            <dd class="order-1 font-display text-6xl font-bold text-forest"><span data-count="20">20</span>+</dd>
+          </div>
+          <div class="flex flex-col">
+            <dt class="order-2 text-sm text-muted">Main office</dt>
+            <dd class="order-1 font-display text-4xl font-bold text-forest uppercase leading-[1.1] pt-3">Tisdale, SK</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision / Approach -->
+  <section class="bg-mist py-16 md:py-20" aria-label="Vision and approach">
+    <div class="container-x">
+    <div class="reveal-stagger grid gap-px overflow-hidden rounded-[4px] bg-line md:grid-cols-2">
+      {[d.vision, d.approach].map((b) => (
+        <div class="bg-white p-8 md:p-12">
+          <h2 class="text-3xl text-forest md:text-4xl">{b.heading}</h2>
+          <span class="bar"></span>
+          <p class="mt-5 text-lg text-muted">{b.text}</p>
+        </div>
+      ))}
+    </div>
+    </div>
+  </section>
+
+  <!-- Expertise: full-bleed image band -->
+  <section class="on-dark relative isolate overflow-hidden bg-deep text-white" aria-labelledby="exp-h">
+    <Image src={d.expertise.image.src} alt={d.expertise.image.alt} widths={[640, 960, 1280, 1600]} sizes="100vw" class="absolute inset-0 -z-10 h-full w-full object-cover opacity-45" />
+    <div class="container-x py-24 md:py-32">
+      <div class="reveal max-w-2xl">
+        <h2 id="exp-h" class="text-5xl md:text-6xl">{d.expertise.heading}</h2>
+        <span class="bar"></span>
+        <p class="mt-6 text-xl text-white/90">{d.expertise.text}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section" aria-labelledby="services-h">
+    <div class="container-x">
+      <div class="reveal max-w-2xl">
+        <h2 id="services-h" class="text-4xl md:text-5xl">{d.services.heading}</h2>
+        <span class="bar"></span>
+        <p class="mt-6 text-lg text-muted">{d.services.text}</p>
+        <a href={s.installer.url} target="_blank" rel="noopener" class="btn btn-outline mt-8 text-forest" data-cta="about-griffin">Visit {s.installer.name} <Icon name="arrow-right" class="size-5 -rotate-45" /><span class="sr-only"> (opens in a new tab)</span></a>
+      </div>
+      <ul class="reveal-stagger mt-12 grid gap-6 md:grid-cols-3">
+        {d.services.items.map((it, i) => (
+          <li class:list={['card-lift overflow-hidden rounded-[4px] border border-line bg-white', i === 1 && 'md:mt-10']}>
+            <Image src={it.image.src} alt={it.image.alt} widths={[400, 640, 800]} sizes="(min-width: 768px) 33vw, 100vw" class="aspect-[4/3] w-full object-cover" />
+            <div class="relative p-6 pt-10">
+              <span class="badge absolute -top-7 left-6 ring-4 ring-white"><Icon name={it.icon} /></span>
+              <h3 class="text-2xl text-forest">{it.title}</h3>
+              <p class="mt-2 text-muted">{it.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand heading={d.cta.heading} text={d.cta.text} id="about" />
+</Base>

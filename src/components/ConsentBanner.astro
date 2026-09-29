@@ -1,0 +1,26 @@
+---
+// Cookie consent. Analytics (GA4) loads only after "Accept" or a customized opt-in.
+---
+<section id="consent" aria-label="Cookie consent" hidden class="fixed inset-x-3 bottom-[calc(5.25rem+env(safe-area-inset-bottom,0px))] z-[60] mx-auto max-w-xl rounded-[4px] border border-line bg-white p-5 shadow-[0_20px_50px_-20px_rgb(10_38_32/0.45)] md:bottom-6">
+  <h2 class="text-xl">Cookies</h2>
+  <p class="mt-2 text-sm text-muted">We use essential cookies to run this site. With your permission we also use Google Analytics to understand how it is used. See our <a class="link" href="/privacy">privacy policy</a>.</p>
+  <form class="mt-3" data-consent-form>
+    <fieldset data-consent-details hidden class="mb-4 grid gap-3 border-t border-line pt-3">
+      <legend class="sr-only">Cookie preferences</legend>
+      <label class="flex items-start gap-3 text-sm">
+        <input type="checkbox" checked disabled class="mt-1 size-5 accent-forest" />
+        <span><strong class="font-semibold">Essential</strong><br />Remembers this choice and protects the quote form (reCAPTCHA). Always on.</span>
+      </label>
+      <label class="flex items-start gap-3 text-sm">
+        <input type="checkbox" name="analytics" class="mt-1 size-5 accent-forest" />
+        <span><strong class="font-semibold">Analytics</strong><br />Google Analytics 4, used to measure visits and quote requests.</span>
+      </label>
+    </fieldset>
+    <div class="flex flex-wrap gap-2">
+      <button type="button" class="btn btn-primary min-h-11 px-5 text-base" data-consent="accept">Accept</button>
+      <button type="button" class="btn btn-outline min-h-11 px-5 text-base text-forest" data-consent="reject">Reject</button>
+      <button type="button" class="btn min-h-11 px-3 text-base text-forest underline decoration-field underline-offset-4" data-consent="customize" aria-expanded="false">Customize</button>
+      <button type="submit" hidden class="btn btn-outline min-h-11 px-5 text-base text-forest" data-consent="save">Save choices</button>
+    </div>
+  </form>
+</section>

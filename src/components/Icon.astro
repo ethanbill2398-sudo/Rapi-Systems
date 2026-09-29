@@ -1,0 +1,50 @@
+---
+// Phosphor icons (bold weight), inlined at build time. Decorative by default.
+import shieldCheck from '@phosphor-icons/core/assets/bold/shield-check-bold.svg?raw';
+import wrench from '@phosphor-icons/core/assets/bold/wrench-bold.svg?raw';
+import arrowsOut from '@phosphor-icons/core/assets/bold/arrows-out-bold.svg?raw';
+import gearSix from '@phosphor-icons/core/assets/bold/gear-six-bold.svg?raw';
+import grains from '@phosphor-icons/core/assets/bold/grains-bold.svg?raw';
+import truckTrailer from '@phosphor-icons/core/assets/bold/truck-trailer-bold.svg?raw';
+import blueprint from '@phosphor-icons/core/assets/bold/blueprint-bold.svg?raw';
+import hardHat from '@phosphor-icons/core/assets/bold/hard-hat-bold.svg?raw';
+import craneTower from '@phosphor-icons/core/assets/bold/crane-tower-bold.svg?raw';
+import stairs from '@phosphor-icons/core/assets/bold/stairs-bold.svg?raw';
+import path from '@phosphor-icons/core/assets/bold/path-bold.svg?raw';
+import nut from '@phosphor-icons/core/assets/bold/nut-bold.svg?raw';
+import pkg from '@phosphor-icons/core/assets/bold/package-bold.svg?raw';
+import clock from '@phosphor-icons/core/assets/bold/clock-bold.svg?raw';
+import phone from '@phosphor-icons/core/assets/bold/phone-bold.svg?raw';
+import envelope from '@phosphor-icons/core/assets/bold/envelope-simple-bold.svg?raw';
+import mapPin from '@phosphor-icons/core/assets/bold/map-pin-bold.svg?raw';
+import facebook from '@phosphor-icons/core/assets/bold/facebook-logo-bold.svg?raw';
+import play from '@phosphor-icons/core/assets/fill/play-fill.svg?raw';
+import list from '@phosphor-icons/core/assets/bold/list-bold.svg?raw';
+import x from '@phosphor-icons/core/assets/bold/x-bold.svg?raw';
+import arrowRight from '@phosphor-icons/core/assets/bold/arrow-right-bold.svg?raw';
+import caretDown from '@phosphor-icons/core/assets/bold/caret-down-bold.svg?raw';
+import caretLeft from '@phosphor-icons/core/assets/bold/caret-left-bold.svg?raw';
+import caretRight from '@phosphor-icons/core/assets/bold/caret-right-bold.svg?raw';
+import check from '@phosphor-icons/core/assets/bold/check-bold.svg?raw';
+import download from '@phosphor-icons/core/assets/bold/download-simple-bold.svg?raw';
+import warning from '@phosphor-icons/core/assets/bold/warning-circle-bold.svg?raw';
+import upload from '@phosphor-icons/core/assets/bold/upload-simple-bold.svg?raw';
+import mapTrifold from '@phosphor-icons/core/assets/bold/map-trifold-bold.svg?raw';
+
+const icons = {
+  'shield-check': shieldCheck, wrench, 'arrows-out': arrowsOut, 'gear-six': gearSix, grains,
+  'truck-trailer': truckTrailer, blueprint, 'hard-hat': hardHat, 'crane-tower': craneTower, stairs,
+  path, nut, package: pkg, clock, phone, envelope, 'map-pin': mapPin, facebook, play, list, x,
+  'arrow-right': arrowRight, 'caret-down': caretDown, 'caret-left': caretLeft, 'caret-right': caretRight,
+  check, download, warning, upload, 'map-trifold': mapTrifold,
+} as const;
+
+export type IconName = keyof typeof icons;
+
+interface Props { name: IconName; class?: string; label?: string }
+const { name, class: className = 'size-6', label } = Astro.props;
+const svg = icons[name]
+  .replace('<svg', `<svg class="${className}" ${label ? `role="img" aria-label="${label}"` : 'aria-hidden="true" focusable="false"'}`)
+  .replace(/ fill="#000000"/g, '');
+---
+<Fragment set:html={svg} />

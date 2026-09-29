@@ -1,0 +1,83 @@
+seo:
+  title: "Grain Support Towers & Catwalks | RapiSYSTEMS Canada"
+  description: "Galvanized, bolt-together grain support towers, bucket elevator towers, catwalks and stairs. Made in the Prairie Provinces, shipped across Canada."
+hero:
+  heading: "Support towers & catwalks"
+  subheading: "Safe access. Solid support. Built to last."
+  image:
+    src: ../../assets/images/bucket-elevator-tower-hopper-bin-blue-sky.webp
+    alt: "Galvanized bucket elevator support tower with spouting beside a large grain bin under a blue prairie sky"
+intro:
+  heading: "One system of common pieces. Any tower, platform or catwalk."
+  lead: "RapiTower and RapiTruss use a simple, robust kit of common structural pieces to configure the tower, platform or catwalk your grain or seed storage system needs."
+  body: "Developed by Griffin Ag, RapiSYSTEMS is a fully bolted arrangement of common structural steel elements that keeps the number of unique pieces to a minimum. That practically eliminates welding from a bin access project, so you can add a catwalk or conveyor system to an existing bin setup without specialized custom structure or long fabrication and install times."
+  image:
+    src: ../../assets/images/rapitower-rapitruss-component-drawing.webp
+    alt: "Line drawing of RapiTower and RapiTruss components: square towers of several heights, 2-post frames and catwalk sections with handrails"
+features:
+  - title: "Galvanized"
+    text: "Maximum durability and corrosion resistance."
+    icon: shield-check
+  - title: "Bolt together"
+    text: "Faster installation, lower labour costs, no welding required."
+    icon: wrench
+  - title: "Various widths"
+    text: "Multiple size options to fit your needs."
+    icon: arrows-out
+  - title: "Fully customizable"
+    text: "Designed for your unique site and system requirements."
+    icon: gear-six
+  - title: "Made in the Prairie Provinces"
+    text: "Supporting Canadian jobs and agriculture."
+    icon: grains
+  - title: "Shipped Canada wide"
+    text: "From the prairies to your farm, coast to coast."
+    icon: truck-trailer
+stats:
+  - value: 20
+    suffix: "+"
+    label: "Years in agricultural construction"
+  - value: 160
+    suffix: " ft"
+    label: "Tower heights available, in 5 ft increments"
+  - value: 400
+    suffix: " ft"
+    label: "Catwalk runs, with supports almost anywhere"
+  - value: 90
+    suffix: " ft"
+    label: "Bin diameters spanned"
+productsHeading: "Four structures. One bolted system."
+video:
+  heading: "See a RapiSYSTEMS build"
+  text: "Galvanized sections arrive ready to bolt together, then go up by crane."
+  title: "RapiSYSTEMS structure on a grain site"
+  vimeoId: "1059405217"
+  hash: "a91ca7b080"
+  aspect: "9/16"
+  poster:
+    src: ../../assets/images/rapitower-crane-install-westeel-bins.webp
+    alt: "Crane lifting a galvanized RapiTower into place beside grain bins"
+projectsHeading: "Recent projects"
+fullService:
+  heading: "Want it installed? Griffin Ag can do the whole job."
+  text: "Any qualified crew can bolt RapiSYSTEMS together, but the team that developed it is the recommended installer. Griffin Ag Services installs, designs and supplies complete grain handling and seed processing systems across Western Canada."
+  items:
+    - title: "Installation"
+      text: "Full installs using Griffin Ag's own heavy equipment, manlifts and equipped tool trailers."
+      icon: hard-hat
+    - title: "Facility design"
+      text: "Systems planned around your current needs and future expansion, with an engineer when required."
+      icon: blueprint
+    - title: "Equipment sales"
+      text: "Grain handling equipment from several suppliers at competitive pricing."
+      icon: package
+  image:
+    src: ../../assets/images/catwalk-truss-install-crane-bin-yard.webp
+    alt: "Crane and manlift installing catwalk truss between grain bins on a new yard"
+map:
+  heading: "Proudly made in the Prairie Provinces. Shipped Canada wide."
+  text: "Sold direct from Tisdale, Saskatchewan and delivered from the prairies to your farm, coast to coast."
+  credit: "Map base: Wikimedia Commons, CC BY-SA 3.0"
+cta:
+  heading: "Planning a tower or catwalk?"
+  text: "Tell us about your bins and equipment. We will size the structure and send a quote."

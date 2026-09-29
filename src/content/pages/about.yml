@@ -1,0 +1,55 @@
+seo:
+  title: "About RapiSYSTEMS | Griffin Ag Services, Tisdale SK"
+  description: "RapiSYSTEMS was developed by Griffin Ag Services Ltd. of Tisdale, Saskatchewan, with over 20 years in agricultural construction."
+hero:
+  heading: "Built by people who install grain systems"
+  subheading: "RapiSYSTEMS was developed by Griffin Ag Services Ltd. in Tisdale, Saskatchewan."
+  image:
+    src: ../../assets/images/grain-yard-support-tower-catwalk-bins.webp
+    alt: "Grain yard with a tall support tower, catwalks and bins at dusk"
+story:
+  heading: "From the job site to a product line"
+  body: "Griffin Ag Services has spent more than 20 years designing and installing grain handling and seed processing facilities. RapiSYSTEMS grew out of that work: a bolted structural system that lets farms add towers, catwalks and stairs without waiting on custom fabrication."
+  image:
+    src: ../../assets/images/rapitower-crane-lift-barley-foreground.webp
+    alt: "Barley in the foreground with a crane setting a galvanized RapiTower between two bins"
+  logo:
+    src: ../../assets/brand/griffin-ag-services-logo.webp
+    alt: "Griffin Ag Services Ltd. logo"
+vision:
+  heading: "Our vision"
+  text: "To be a regional leader in grain handling and seed processing solutions, delivering dependable service and practical innovation that help our clients succeed."
+approach:
+  heading: "Our approach"
+  text: "Every project is personal. We tailor the work to each client's site and goals, and we work closely with you from the first conversation to the final bolt."
+expertise:
+  heading: "20+ years of expertise"
+  text: "With over two decades in agricultural construction, our team helps operations of every size build or expand, and we keep current with the latest equipment and methods."
+  image:
+    src: ../../assets/images/bucket-elevator-tower-guyed-spouts-bin-site.webp
+    alt: "Bucket elevator tower with guyed spouting feeding a new grain bin, service truck in the foreground"
+services:
+  heading: "Full service from Griffin Ag"
+  text: "RapiSYSTEMS structure is one part of what we do. Griffin Ag is the recommended installer for RapiSYSTEMS, and when you need a complete system we can take it from plan to commissioning."
+  items:
+    - title: "Consultation and design"
+      text: "On-location consultation and facility design for grain handling, drying and seed processing, including engineering when required."
+      icon: blueprint
+      image:
+        src: ../../assets/images/grain-dryer-elevator-leg-support-tower.webp
+        alt: "Grain dryer and elevator leg with support structure and spouting"
+    - title: "Equipment sales"
+      text: "We help you choose the right equipment and supply it from several manufacturers at competitive pricing."
+      icon: package
+      image:
+        src: ../../assets/images/seed-processing-plant-interior-stairs.webp
+        alt: "Seed processing plant interior with cleaning equipment, platforms and stairs"
+    - title: "Installation"
+      text: "Our crews install with our own heavy equipment, manlifts and equipped tool trailers."
+      icon: hard-hat
+      image:
+        src: ../../assets/images/rapitower-section-crane-lift-dusk.webp
+        alt: "Crane lifting a tower section onto a bucket elevator tower at dusk"
+cta:
+  heading: "Let's plan your next build"
+  text: "Talk to the team that designs, supplies and installs it."

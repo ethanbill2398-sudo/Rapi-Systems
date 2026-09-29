@@ -1,0 +1,88 @@
+---
+import Image from './Img.astro';
+import logo from '../assets/brand/rapisystems-logo.png';
+import Icon from './Icon.astro';
+import { nav, isExternal, linkAttrs, type Settings } from '../lib/site';
+
+interface Props { settings: Settings }
+const { settings: s } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
+---
+{s.announcement.enabled && (
+  <div class="bg-deep text-white">
+    <p class="container-x flex min-h-10 items-center justify-center py-2 text-center text-sm font-semibold tracking-wide">
+      {s.announcement.link
+        ? <a href={s.announcement.link} class="underline decoration-field decoration-2 underline-offset-4">{s.announcement.text}</a>
+        : s.announcement.text}
+    </p>
+  </div>
+)}
+
+<header class="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+  <div class="container-x flex h-16 items-center justify-between gap-4 lg:h-[76px]">
+    <a href="/" class="shrink-0" aria-label={`${s.brandName} home`}>
+      <Image src={logo} alt="" width={132} height={Math.round(132 * logo.height / logo.width)} loading="eager" fetchpriority="high" class="h-auto w-[104px] lg:w-[124px]" />
+    </a>
+
+    <nav aria-label="Main" class="hidden lg:block">
+      <ul class="flex items-center gap-7">
+        {nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              {...linkAttrs(item.href)}
+              aria-current={isCurrent(item.href) ? 'page' : undefined}
+              class="relative py-2 text-[0.95rem] font-semibold text-ink after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:bg-field after:transition-transform after:duration-200 aria-[current=page]:after:scale-x-100 hover:after:scale-x-100"
+            >{item.label}{isExternal(item.href) && <span class="sr-only"> (opens in a new tab)</span>}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2 sm:gap-4">
+      <a href={`tel:${s.phoneHref}`} class="hidden items-center gap-2 font-semibold text-forest sm:inline-flex lg:hidden xl:inline-flex">
+        <Icon name="phone" class="size-5" /> {s.phone}
+      </a>
+      <a href="/contact" class="btn btn-primary hidden md:inline-flex" data-cta="header">Request a Quote</a>
+      <button type="button" class="grid size-12 place-items-center rounded-[2px] text-ink lg:hidden" data-menu-open aria-haspopup="dialog" aria-controls="mobile-menu">
+        <Icon name="list" class="size-7" />
+        <span class="sr-only">Open menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<dialog id="mobile-menu" aria-label="Menu" class="on-dark m-0 ml-auto h-dvh max-h-none w-full max-w-sm bg-deep p-0 text-white backdrop:bg-deep/60">
+  <div class="flex h-full flex-col px-6 pt-4 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))]">
+    <div class="flex items-center justify-between">
+      <span class="font-display text-xl font-bold uppercase">Menu</span>
+      <button type="button" class="grid size-12 place-items-center" data-menu-close>
+        <Icon name="x" class="size-7" />
+        <span class="sr-only">Close menu</span>
+      </button>
+    </div>
+    <nav aria-label="Mobile" class="mt-6">
+      <ul class="divide-y divide-white/10 border-y border-white/10">
+        <li><a href="/" class="block py-4 font-display text-2xl font-bold uppercase" aria-current={path === '/' ? 'page' : undefined}>Home</a></li>
+        {nav.map((item) => (
+          <li><a href={item.href} {...linkAttrs(item.href)} class="block py-4 font-display text-2xl font-bold uppercase aria-[current=page]:text-field" aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}{isExternal(item.href) && <span class="sr-only"> (opens in a new tab)</span>}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <div class="mt-auto grid gap-3">
+      <a href="/contact" class="btn btn-primary w-full" data-cta="mobile-menu">Request a Quote</a>
+      <a href={`tel:${s.phoneHref}`} class="btn btn-outline w-full"><Icon name="phone" class="size-5" /> {s.phone}</a>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  dialog[open] { animation: slide-in 280ms var(--ease-drawer, cubic-bezier(0.32, 0.72, 0, 1)); }
+  dialog[open]::backdrop { animation: fade 200ms ease; }
+  @keyframes slide-in { from { transform: translateX(100%); } }
+  @keyframes fade { from { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    dialog[open] { animation: fade 150ms ease; }
+  }
+</style>

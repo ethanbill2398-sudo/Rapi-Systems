@@ -1,0 +1,187 @@
+---
+import Image from '../components/Img.astro';
+import { getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { getSettings } from '../lib/site';
+import { breadcrumbs } from '../lib/schema';
+import { provinces, productInterests, installOptions } from '../lib/quote-fields';
+
+const s = await getSettings();
+const { data: d } = (await getEntry('contact', 'contact'))!;
+const siteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY ?? '';
+const input = 'mt-2 block w-full min-h-12 rounded-[2px] border border-muted/60 bg-white px-3 py-2 text-ink aria-[invalid=true]:border-danger focus:border-forest';
+---
+<Base title={d.seo.title} description={d.seo.description} schema={[breadcrumbs(Astro.site!, [{ name: 'Request a Quote', path: '/contact' }])]}>
+  <section class="bg-mist pt-12 pb-16 md:pt-16 md:pb-24">
+    <div class="container-x grid gap-12 lg:grid-cols-[1fr_1.35fr] lg:gap-16">
+      <!-- Details -->
+      <div>
+        <h1 class="text-5xl text-forest md:text-6xl">{d.heading}</h1>
+        <span class="bar"></span>
+        <p class="mt-6 max-w-md text-lg text-muted">{d.intro}</p>
+
+        <ul class="mt-10 grid gap-5">
+          <li class="flex items-start gap-4">
+            <span class="badge size-12"><Icon name="phone" class="size-6" /></span>
+            <div><p class="text-sm text-muted">Phone</p><a href={`tel:${s.phoneHref}`} class="text-xl font-semibold text-forest hover:underline">{s.phone}</a></div>
+          </li>
+          <li class="flex items-start gap-4">
+            <span class="badge size-12"><Icon name="envelope" class="size-6" /></span>
+            <div class="min-w-0"><p class="text-sm text-muted">Email</p><a href={`mailto:${s.email}`} class="text-lg font-semibold break-all text-forest hover:underline">{s.email}</a></div>
+          </li>
+          <li class="flex items-start gap-4">
+            <span class="badge size-12"><Icon name="map-pin" class="size-6" /></span>
+            <div><p class="text-sm text-muted">Main office</p><p class="text-lg font-semibold">{s.office}</p></div>
+          </li>
+          <li class="flex items-start gap-4">
+            <span class="badge size-12"><Icon name="map-trifold" class="size-6" /></span>
+            <div><p class="text-sm text-muted">Service area</p><p class="font-semibold">{s.serviceArea}.</p><p class="text-muted">{s.shippingArea}.</p></div>
+          </li>
+          <li class="flex items-start gap-4">
+            <span class="badge size-12"><Icon name="hard-hat" class="size-6" /></span>
+            <div><p class="text-sm text-muted">Recommended installer</p><a href={s.installer.url} target="_blank" rel="noopener" class="font-semibold text-forest hover:underline" data-cta="contact-griffin">{s.installer.name}<span class="sr-only"> (opens in a new tab)</span></a><p class="text-sm text-muted">Installs across Western Canada.</p></div>
+          </li>
+          <li class="flex items-start gap-4">
+            <span class="badge size-12"><Icon name="facebook" class="size-6" /></span>
+            <div><p class="text-sm text-muted">Facebook</p><a href={s.facebookUrl} target="_blank" rel="noopener" class="font-semibold text-forest hover:underline">RapiSYSTEMS on Facebook<span class="sr-only"> (opens in a new tab)</span></a></div>
+          </li>
+        </ul>
+
+        <Image src={d.image.src} alt={d.image.alt} widths={[480, 720]} sizes="(min-width: 1024px) 35vw, 100vw" class="mt-10 hidden aspect-[4/3] w-full rounded-[4px] object-cover lg:block" />
+      </div>
+
+      <!-- Form -->
+      <div class="rounded-[4px] bg-white p-5 shadow-[0_24px_60px_-30px_rgb(10_38_32/0.35)] sm:p-8 md:p-10">
+        <form id="quote-form" novalidate data-sitekey={siteKey} aria-labelledby="form-h">
+          <h2 id="form-h" class="text-3xl">Project details</h2>
+          <p class="mt-1 text-sm text-muted">Fields marked <span aria-hidden="true">*</span><span class="sr-only">with an asterisk</span> are required.</p>
+
+          <div role="alert" class="mt-5 hidden rounded-[2px] border-l-4 border-danger bg-danger/5 p-4 text-sm" data-form-error tabindex="-1"></div>
+
+          <div class="mt-6 grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="f-name" class="font-semibold">Name <span aria-hidden="true" class="text-danger">*</span></label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="100" class={input} aria-describedby="e-name" />
+              <p id="e-name" class="field-error" data-error-for="name"></p>
+            </div>
+            <div>
+              <label for="f-company" class="font-semibold">Company or farm</label>
+              <input id="f-company" name="company" type="text" autocomplete="organization" maxlength="120" class={input} />
+            </div>
+            <div>
+              <label for="f-email" class="font-semibold">Email <span aria-hidden="true" class="text-danger">*</span></label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="160" class={input} aria-describedby="e-email" autocapitalize="none" autocorrect="off" spellcheck="false" />
+              <p id="e-email" class="field-error" data-error-for="email"></p>
+            </div>
+            <div>
+              <label for="f-phone" class="font-semibold">Phone</label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="40" pattern="[0-9\s()+.\-]*" inputmode="tel" class={input} aria-describedby="e-phone" />
+              <p id="e-phone" class="field-error" data-error-for="phone"></p>
+            </div>
+            <div>
+              <label for="f-province" class="font-semibold">Province or territory</label>
+              <select id="f-province" name="province" autocomplete="address-level1" class={input}>
+                <option value="">Select</option>
+                {provinces.map((p) => <option value={p}>{p}</option>)}
+              </select>
+            </div>
+            <div>
+              <label for="f-town" class="font-semibold">Nearest town</label>
+              <input id="f-town" name="town" type="text" autocomplete="address-level2" maxlength="100" class={input} />
+            </div>
+          </div>
+
+          <fieldset class="mt-6">
+            <legend class="font-semibold">What are you interested in?</legend>
+            <div class="mt-3 grid gap-2 sm:grid-cols-2">
+              {productInterests.map((p) => (
+                <label class="flex min-h-12 cursor-pointer items-center gap-3 rounded-[2px] border border-line px-3 has-[:checked]:border-forest has-[:checked]:bg-forest/5">
+                  <input type="checkbox" name="interests" value={p.value} class="size-5 accent-forest" /> {p.label}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset class="mt-6" id="f-install" tabindex="-1">
+            <legend class="font-semibold">Who will install it?</legend>
+            <p class="mt-1 text-sm text-muted">Griffin Ag developed RapiSYSTEMS and is the recommended installer. Any qualified crew can also bolt it together.</p>
+            <div class="mt-3 grid gap-2">
+              {installOptions.map((o, i) => (
+                <label class="flex min-h-12 cursor-pointer items-center gap-3 rounded-[2px] border border-line px-3 has-[:checked]:border-forest has-[:checked]:bg-forest/5">
+                  <input type="radio" name="install" value={o.value} checked={i === 0} class="size-5 accent-forest" /> {o.label}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <div class="mt-6">
+            <label for="f-timeline" class="font-semibold">Project timeline</label>
+            <select id="f-timeline" name="timeline" class={input}>
+              <option value="">Select</option>
+              {d.timelines.map((t) => <option value={t}>{t}</option>)}
+            </select>
+          </div>
+
+          <div class="mt-6">
+            <label for="f-message" class="font-semibold">Message</label>
+            <textarea id="f-message" name="message" rows="5" maxlength="5000" class={input} aria-describedby="h-message"></textarea>
+            <p id="h-message" class="mt-1 text-sm text-muted">Bin sizes, number of bins, leg or conveyor details, tower height, anything that helps.</p>
+          </div>
+
+          <div class="mt-6">
+            <label for="f-file" class="font-semibold">Site plan or photo <span class="font-normal text-muted">(optional)</span></label>
+            <input id="f-file" name="file" type="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" class="mt-2 block w-full rounded-[2px] border border-dashed border-muted/60 bg-mist p-3 text-sm file:mr-4 file:min-h-10 file:rounded-[2px] file:border-0 file:bg-forest file:px-4 file:font-semibold file:text-white aria-[invalid=true]:border-danger" aria-describedby="h-file e-file" />
+            <p id="h-file" class="mt-1 text-sm text-muted">PDF, JPG or PNG, up to 10 MB.</p>
+            <p id="e-file" class="field-error" data-error-for="file"></p>
+          </div>
+
+          <!-- Honeypot: hidden from people, tempting to bots -->
+          <div class="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
+            <label for="f-website">Website</label>
+            <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="mt-6">
+            <label class="flex cursor-pointer items-start gap-3">
+              <input type="checkbox" name="consent" required class="mt-1 size-5 shrink-0 accent-forest" aria-describedby="e-consent" />
+              <span>I agree that Griffin Ag Services may contact me about this request, as described in the <a href="/privacy" class="link">privacy policy</a>. <span aria-hidden="true" class="text-danger">*</span></span>
+            </label>
+            <p id="e-consent" class="field-error" data-error-for="consent"></p>
+          </div>
+
+          <button type="submit" class="btn btn-primary mt-8 w-full sm:w-auto" data-submit>
+            <span data-submit-label>Request a Quote</span>
+          </button>
+
+          <p class="mt-5 text-xs leading-relaxed text-muted">
+            This site is protected by reCAPTCHA and the Google{' '}
+            <a href="https://policies.google.com/privacy" class="underline" target="_blank" rel="noopener">Privacy Policy</a>{' '}and{' '}
+            <a href="https://policies.google.com/terms" class="underline" target="_blank" rel="noopener">Terms of Service</a>{' '}apply.
+          </p>
+          <noscript><p class="mt-4 rounded-[2px] bg-mist p-4 text-sm">This form needs JavaScript for spam protection. You can also call <a class="link" href={`tel:${s.phoneHref}`}>{s.phone}</a> or email <a class="link" href={`mailto:${s.email}`}>{s.email}</a>.</p></noscript>
+        </form>
+
+        <div hidden data-form-success tabindex="-1" class="py-10 text-center">
+          <span class="badge mx-auto size-16 bg-field text-deep"><Icon name="check" class="size-8" /></span>
+          <h2 class="mt-6 text-4xl text-forest">{d.successHeading}</h2>
+          <p class="mx-auto mt-4 max-w-md text-lg text-muted">{d.successText}</p>
+          <a href="/rapitower-rapitruss" class="link mt-8 inline-flex min-h-11 items-center gap-2">Read about the bolted system <Icon name="arrow-right" class="size-4" /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .field-error { margin-top: 0.375rem; font-size: 0.875rem; font-weight: 600; color: var(--color-danger); }
+  .field-error:empty { display: none; }
+  [data-form-success]:not([hidden]) { animation: pop 320ms var(--ease-out); }
+  @keyframes pop { from { opacity: 0; transform: scale(0.97); } }
+  @media (prefers-reduced-motion: reduce) { [data-form-success]:not([hidden]) { animation: none; } }
+</style>
+
+<script>
+  import { initQuoteForm } from '../scripts/quote-form';
+  initQuoteForm();
+</script>

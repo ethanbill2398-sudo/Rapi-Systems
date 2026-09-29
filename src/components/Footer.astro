@@ -1,0 +1,48 @@
+---
+import Image from './Img.astro';
+import logoReverse from '../assets/brand/rapisystems-logo-reverse.png';
+import Icon from './Icon.astro';
+import { nav, isExternal, linkAttrs, type Settings } from '../lib/site';
+
+interface Props { settings: Settings }
+const { settings: s } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="on-dark bg-deep text-on-dark-muted">
+  <div class="container-x grid gap-12 py-16 md:grid-cols-[1.3fr_1fr_1fr] md:py-20">
+    <div>
+      <Image src={logoReverse} alt={s.brandName} width={200} class="h-auto w-[180px]" />
+      <p class="mt-6 max-w-sm font-display text-2xl font-bold text-white uppercase">{s.footerTagline}</p>
+      <p class="mt-3 max-w-sm text-sm">RapiSYSTEMS, RapiTower and RapiTruss are developed by {s.companyName}</p>
+      <p class="mt-4 max-w-sm text-sm">Recommended installer:{' '}<a href={s.installer.url} target="_blank" rel="noopener" class="inline-flex min-h-11 items-center font-semibold text-white underline decoration-field decoration-2 underline-offset-4">{s.installer.name}<span class="sr-only"> (opens in a new tab)</span></a></p>
+    </div>
+
+    <nav aria-label="Footer">
+      <h2 class="text-lg text-white">Explore</h2>
+      <ul class="mt-4 grid gap-1">
+        <li><a class="inline-block py-1.5 hover:text-white" href="/">Home</a></li>
+        {nav.map((item) => <li><a class="inline-block py-1.5 hover:text-white" href={item.href} {...linkAttrs(item.href)}>{item.label}{isExternal(item.href) && <span class="sr-only"> (opens in a new tab)</span>}</a></li>)}
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class="text-lg text-white">Contact</h2>
+      <ul class="mt-4 grid gap-3">
+        <li><a class="inline-flex min-h-11 items-center gap-3 text-white hover:underline" href={`tel:${s.phoneHref}`}><Icon name="phone" class="size-5 text-field" /> {s.phone}</a></li>
+        <li><a class="inline-flex min-h-11 items-center gap-3 break-all text-white hover:underline" href={`mailto:${s.email}`}><Icon name="envelope" class="size-5 shrink-0 text-field" /> {s.email}</a></li>
+        <li class="flex items-start gap-3"><Icon name="map-pin" class="mt-1 size-5 shrink-0 text-field" /> <span>Main office: {s.office}</span></li>
+        <li><a class="inline-flex min-h-11 items-center gap-3 text-white hover:underline" href={s.facebookUrl} rel="noopener" target="_blank"><Icon name="facebook" class="size-5 text-field" /> RapiSYSTEMS on Facebook<span class="sr-only"> (opens in a new tab)</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="container-x flex flex-col gap-3 py-6 text-sm sm:flex-row sm:items-center sm:justify-between">
+      <p>&copy; {year} {s.companyName} All rights reserved.</p>
+      <ul class="flex flex-wrap gap-x-6 gap-y-1">
+        <li><a class="inline-flex min-h-11 items-center hover:text-white" href="/privacy">Privacy</a></li>
+        <li><a class="inline-flex min-h-11 min-w-11 items-center hover:text-white" href="/terms">Terms</a></li>
+        <li><button type="button" class="min-h-11 hover:text-white" data-consent-open>Cookie settings</button></li>
+      </ul>
+    </div>
+  </div>
+</footer>

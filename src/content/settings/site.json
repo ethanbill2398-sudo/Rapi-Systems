@@ -1,0 +1,25 @@
+{
+  "brandName": "RapiSYSTEMS",
+  "companyName": "Griffin Ag Services Ltd.",
+  "phone": "(306) 873-8717",
+  "phoneHref": "+13068738717",
+  "email": "griffinagservices@yahoo.com",
+  "office": "Tisdale, Saskatchewan",
+  "serviceArea": "Design, equipment sales and installation across Western Canada",
+  "shippingArea": "RapiSYSTEMS structure sold direct and shipped across Canada",
+  "facebookUrl": "https://www.facebook.com/people/Rapisystems/61574246300351/",
+  "announcement": {
+    "enabled": true,
+    "text": "Now booking for the 2027 season!",
+    "link": "/contact"
+  },
+  "defaultOgImage": "/og/rapisystems-social.jpg",
+  "footerTagline": "Your partner in grain handling solutions.",
+  "installer": {
+    "name": "Griffin Ag Services",
+    "url": "https://griffinagservices.com/",
+    "heading": "Want it installed? Griffin Ag is the recommended installer.",
+    "text": "Griffin Ag Services developed RapiSYSTEMS and installs it across Western Canada with its own heavy equipment, manlifts and equipped tool trailers.",
+    "note": "RapiSYSTEMS bolts together, so any qualified crew can install it. For a single point of contact from quote to final bolt, ask for Griffin Ag installation."
+  }
+}

@@ -1,0 +1,136 @@
+seo:
+  title: "RapiTower & RapiTruss | Bolt-Together Grain Towers"
+  description: "How the RapiTower and RapiTruss bolted system works: galvanized structural steel, minimal unique pieces, no site welding. Specs, FAQ and downloads."
+hero:
+  heading: "RapiTower & RapiTruss"
+  subheading: "A bolted structural system for grain leg towers, catwalks and stairs."
+  image:
+    src: ../../assets/images/stair-tower-catwalk-truss-assembly.webp
+    alt: "Stair tower with switchback stairs beside grain bins while catwalk truss sections are assembled on the ground"
+system:
+  heading: "How the bolted system works"
+  body: "RapiSYSTEMS elements are fabricated from heavy galvanized structural steel sections with a minimum of welded or custom sheet metal parts. A small set of common pieces bolts together in thousands of configurations, from small bins to very large bins and equipment, so each structure is configured to order without being custom-built from scratch."
+  image:
+    src: ../../assets/images/rapitower-rapitruss-component-drawing.webp
+    alt: "3D line drawing of the RapiTower and RapiTruss system showing towers, 2-post frames and catwalk sections"
+  points:
+    - title: "Common structural elements"
+      text: "Standard steel sections repeat across every tower and truss, which keeps unique pieces to a minimum."
+      icon: stairs
+    - title: "Fully bolted connections"
+      text: "Members bolt together on site. Welding is practically eliminated from the project."
+      icon: nut
+    - title: "Galvanized finish"
+      text: "Every piece is galvanized for durability and corrosion resistance in prairie weather."
+      icon: shield-check
+    - title: "Configured to order"
+      text: "Heights, lengths, widths and attachments are set to your bins, legs and conveyors."
+      icon: gear-six
+steps:
+  heading: "From your yard plan to standing steel"
+  items:
+    - title: "Configure"
+      text: "We lay out towers, catwalks and stairs around your bins and equipment."
+      icon: path
+    - title: "Engineer"
+      text: "The configuration is checked for your site, with an engineer when required."
+      icon: blueprint
+    - title: "Fabricate & galvanize"
+      text: "Common structural sections are cut, drilled and galvanized."
+      icon: shield-check
+    - title: "Ship"
+      text: "Components ship from the prairies to anywhere in Canada."
+      icon: truck-trailer
+    - title: "Bolt together on site"
+      text: "Griffin Ag installs it, or any qualified crew can bolt it up. No welding crew needed."
+      icon: wrench
+comparison:
+  heading: "Bolted vs. welded structure"
+  text: "Custom welded structure has its place. For bin access and conveyor support, a bolted system usually gets you there faster."
+  rows:
+    - label: "Install time"
+      bolted: "Pre-made sections bolt together quickly on site"
+      welded: "Custom pieces fabricated and fitted one project at a time"
+    - label: "Labour"
+      bolted: "General crew with hand and power tools"
+      welded: "Certified welders and fitters on site"
+    - label: "Site welding"
+      bolted: "Practically none"
+      welded: "Hot work on site near grain and dust"
+    - label: "Retrofitting existing bins"
+      bolted: "Add a catwalk or conveyor to the bins you have"
+      welded: "Custom structure designed around each bin"
+    - label: "Lead time"
+      bolted: "Common pieces, no long custom fabrication"
+      welded: "Long fabrication and install times"
+specs:
+  heading: "Specifications"
+  note: "Figures come from the RapiSYSTEMS brochure. Items marked SPEC are pending confirmation from Griffin Ag."
+  groups:
+    - title: "RapiTower"
+      rows:
+        - label: "Minimum size"
+          value: "6 ft wide x 20 ft tall"
+        - label: "Maximum size"
+          value: "[SPEC: max tower width TBD] wide x 160 ft tall"
+        - label: "Increments"
+          value: "5 ft"
+        - label: "Options"
+          value: "Wrap-around stairs, attachments on any side at any height"
+    - title: "RapiTruss"
+      rows:
+        - label: "Catwalk length"
+          value: "Up to 400 ft, in 5 ft increments"
+        - label: "Support placement"
+          value: "At nearly any point along the length"
+        - label: "Bin spans"
+          value: "Bins up to 90 ft diameter, any combination of sizes and heights"
+        - label: "Walkway widths"
+          value: "[SPEC: catwalk widths TBD]"
+    - title: "Materials & engineering"
+      rows:
+        - label: "Material"
+          value: "Heavy galvanized structural steel sections"
+        - label: "Connections"
+          value: "Fully bolted"
+        - label: "Load ratings"
+          value: "[SPEC: load ratings TBD]"
+        - label: "Certifications"
+          value: "[SPEC: certifications / engineering stamp TBD]"
+  downloads:
+    - label: "Support towers & catwalks flyer"
+      file: /downloads/rapisystems-support-towers-catwalks-flyer.jpg
+      format: JPG
+      size: "450 KB"
+    - label: "RapiSYSTEMS brochure, outside"
+      file: /downloads/rapisystems-brochure-trifold-outside.jpg
+      format: JPG
+      size: "190 KB"
+    - label: "RapiSYSTEMS brochure, inside"
+      file: /downloads/rapisystems-brochure-trifold-inside.jpg
+      format: JPG
+      size: "215 KB"
+faq:
+  heading: "Frequently asked questions"
+  items:
+    - question: "Does a RapiSYSTEMS tower need welding on site?"
+      answer: "No. RapiTower and RapiTruss are fully bolted systems built from common structural steel pieces, which practically eliminates welding from a bin access project."
+    - question: "Can I add a catwalk to my existing grain bins?"
+      answer: "Yes. RapiSYSTEMS was designed so farms can economically add a catwalk or conveyor system to an existing bin setup without specialized custom structure or long fabrication and install times."
+    - question: "What sizes are RapiTower grain leg towers available in?"
+      answer: "According to the RapiSYSTEMS brochure, towers range from 6 ft wide by 20 ft tall up to 160 ft tall, in 5 ft increments. Contact us to confirm sizes for your site."
+    - question: "How long can a RapiTruss catwalk be?"
+      answer: "RapiTruss catwalks and equipment supports can be configured to any required length in 5 ft increments, up to 400 ft, with supports placed at nearly any point along the length."
+    - question: "Can stairs be added to a tower?"
+      answer: "Yes. Wrap-around stairs are available as an option on RapiTower support towers."
+    - question: "Is the steel galvanized?"
+      answer: "Yes. All RapiSYSTEMS structure is galvanized for maximum durability and corrosion resistance."
+    - question: "Who should install my RapiSYSTEMS structure?"
+      answer: "We recommend Griffin Ag Services. They developed the system, know every piece, and can handle the install from delivery to the final bolt. Any qualified crew can also bolt it together, and we will ship the structure to them anywhere in Canada."
+    - question: "Do you ship outside Saskatchewan?"
+      answer: "Yes. RapiSYSTEMS structure is sold direct and shipped across Canada. Griffin Ag Services also offers installation across Western Canada."
+    - question: "Can you install the structure for us?"
+      answer: "Yes. Griffin Ag Services, the team that developed RapiSYSTEMS, is the recommended installer and works across Western Canada with its own heavy equipment, manlifts and tool trailers. Because the system bolts together, any qualified crew can also install it. Visit griffinagservices.com or ask for installation in your quote."
+cta:
+  heading: "Get a quote on RapiSYSTEMS structure"
+  text: "Send us your bin layout and equipment list. We will configure the towers and catwalks to suit."

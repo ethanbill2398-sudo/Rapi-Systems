@@ -1,0 +1,22 @@
+---
+import Image from '../components/Img.astro';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import photo from '../assets/images/grain-bin-yard-catwalk-sunrise.webp';
+---
+<Base title="Page not found | RapiSYSTEMS" description="The page you were looking for could not be found." noindex>
+  <section class="on-dark relative isolate overflow-hidden bg-deep text-white">
+    <Image src={photo} alt="" widths={[640, 1280, 1600]} sizes="100vw" loading="eager" class="absolute inset-0 -z-10 h-full w-full object-cover opacity-35" />
+    <div class="container-x flex min-h-[70svh] flex-col justify-center py-20">
+      <p class="font-display text-2xl font-bold text-field">404</p>
+      <h1 class="mt-2 max-w-3xl text-5xl md:text-7xl">This catwalk doesn't go anywhere.</h1>
+      <span class="bar"></span>
+      <p class="mt-6 max-w-lg text-lg text-white/90">The page you were looking for has moved or never existed. Try one of these instead.</p>
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <a href="/contact" class="btn btn-primary" data-cta="404">Request a Quote</a>
+        <a href="/rapitower-rapitruss" class="btn btn-outline text-white">View products</a>
+        <a href="/" class="inline-flex min-h-11 items-center gap-2 font-semibold underline decoration-field decoration-2 underline-offset-4"><Icon name="caret-left" class="size-4" /> Home</a>
+      </div>
+    </div>
+  </section>
+</Base>

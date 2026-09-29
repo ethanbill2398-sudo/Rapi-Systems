@@ -1,0 +1,211 @@
+---
+import Image from '../components/Img.astro';
+import { getEntry, getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import VideoFacade from '../components/VideoFacade.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import CtaBand from '../components/CtaBand.astro';
+import mapUrl from '../assets/svg/canada-map.svg?url';
+import { getSettings } from '../lib/site';
+import { product } from '../lib/schema';
+
+const s = await getSettings();
+const { data: d } = (await getEntry('home', 'home'))!;
+const products = (await getCollection('products')).sort((a, b) => a.data.order - b.data.order);
+const projects = (await getCollection('projects', (p) => !p.data.draft))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+const site = Astro.site!;
+const productSchema = products.map((p) =>
+  product(site, { name: p.data.name, description: p.data.schemaDescription, image: p.data.image.src.src, anchor: p.data.anchor }),
+);
+---
+<Base title={d.seo.title} description={d.seo.description} schema={productSchema}>
+  <!-- Hero -->
+  <section class="on-dark relative isolate overflow-hidden bg-deep text-white">
+    <Image
+      src={d.hero.image.src}
+      alt={d.hero.image.alt}
+      widths={[480, 800, 1080, 1440, 1920]}
+      sizes="100vw"
+      quality={48}
+      loading="eager"
+      fetchpriority="high"
+      class="parallax absolute inset-0 -z-10 h-full w-full object-cover object-[70%_30%]"
+    />
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-t from-deep/90 via-deep/40 to-deep/10 md:hidden"></div>
+    <div class="grid min-h-[min(88svh,820px)] md:grid-cols-[minmax(0,640px)_1fr]">
+      <div class="relative flex items-end md:items-center">
+        <div aria-hidden="true" class="absolute inset-0 hidden bg-field md:block" style="clip-path: polygon(0 0, 100% 0, 84% 100%, 0 100%)"></div>
+        <div aria-hidden="true" class="absolute inset-0 hidden bg-forest md:block" style="clip-path: polygon(0 0, calc(100% - 14px) 0, calc(84% - 14px) 100%, 0 100%)"></div>
+        <div class="relative px-4 py-14 sm:px-6 md:py-16 md:pr-24 md:pl-10 lg:pl-[max(2.5rem,calc((100vw-1320px)/2+2.5rem))]">
+          <h1 class="text-[3.25rem] leading-[0.95] sm:text-6xl lg:text-7xl">{d.hero.heading}</h1>
+          <span class="bar w-24"></span>
+          <p class="mt-6 max-w-md font-display text-2xl font-semibold uppercase md:text-3xl">{d.hero.subheading}</p>
+          <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+            <a href="/contact" class="btn btn-primary" data-cta="hero">Request a Quote <Icon name="arrow-right" class="size-5" /></a>
+            <a href={`tel:${s.phoneHref}`} class="inline-flex min-h-11 items-center gap-2 font-semibold underline decoration-field decoration-2 underline-offset-4">
+              <Icon name="phone" class="size-5" /> {s.phone}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro: RapiTower / RapiTruss -->
+  <section class="section" aria-labelledby="intro-h">
+    <div class="container-x grid gap-12 lg:grid-cols-[1.05fr_1fr] lg:items-center">
+      <div class="reveal">
+        <p class="mb-3 text-sm font-semibold tracking-[0.14em] text-forest uppercase">RapiTower &amp; RapiTruss</p>
+        <h2 id="intro-h" class="text-4xl text-forest md:text-5xl">{d.intro.heading}</h2>
+        <span class="bar"></span>
+        <p class="mt-6 text-xl font-medium">{d.intro.lead}</p>
+        <p class="mt-4 max-w-[62ch] text-muted">{d.intro.body}</p>
+        <a href="/rapitower-rapitruss" class="link mt-6 inline-flex min-h-11 items-center gap-2">How the bolted system works <Icon name="arrow-right" class="size-4" /></a>
+      </div>
+      <figure class="reveal relative rounded-[4px] border border-line bg-white p-4 md:p-8">
+        <Image src={d.intro.image.src} alt={d.intro.image.alt} widths={[480, 720, 960]} sizes="(min-width: 1024px) 45vw, 100vw" class="h-auto w-full" />
+      </figure>
+    </div>
+
+    <div class="container-x mt-16">
+    <dl class="reveal-stagger grid grid-cols-2 gap-px overflow-hidden rounded-[4px] bg-line lg:grid-cols-4">
+      {d.stats.map((st) => (
+        <div class="flex flex-col bg-mist p-6 md:p-8">
+          <dt class="order-2 mt-2 text-sm text-muted">{st.label}</dt>
+          <dd class="order-1 font-display text-5xl font-bold text-forest md:text-6xl">
+            <span data-count={st.value}>{st.value}</span>{st.suffix}
+          </dd>
+        </div>
+      ))}
+    </dl>
+    </div>
+    <p class="container-x mt-3 text-sm text-muted">Sizes from the RapiSYSTEMS brochure. <a class="link" href="/rapitower-rapitruss#specifications">See specifications</a>.</p>
+  </section>
+
+  <!-- Feature badges (flyer) -->
+  <section class="bg-mist py-16 md:py-20" aria-labelledby="features-h">
+    <div class="container-x">
+      <h2 id="features-h" class="sr-only">Why RapiSYSTEMS</h2>
+      <ul class="reveal-stagger grid grid-cols-2 gap-y-10 sm:grid-cols-3 lg:grid-cols-6 lg:divide-x lg:divide-line">
+        {d.features.map((f) => (
+          <li class="flex flex-col items-center px-3 text-center">
+            <span class="badge"><Icon name={f.icon} /></span>
+            <h3 class="mt-4 text-xl text-forest">{f.title}</h3>
+            <p class="mt-1 text-[0.95rem] leading-snug text-muted">{f.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section class="section" aria-labelledby="products-h">
+    <div class="container-x">
+      <div class="reveal max-w-2xl">
+        <h2 id="products-h" class="text-4xl md:text-5xl">{d.productsHeading}</h2>
+        <span class="bar"></span>
+      </div>
+      <ul class="reveal-stagger mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {products.map((p, i) => (
+          <li class:list={['card-lift group relative isolate flex min-h-[420px] flex-col justify-end overflow-hidden rounded-[4px] bg-deep text-white', i === 0 && 'lg:row-span-1']}>
+            <Image src={p.data.image.src} alt={p.data.image.alt} widths={[400, 640, 800]} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" class="absolute inset-0 -z-10 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]" />
+            <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-t from-deep via-deep/70 to-deep/0"></div>
+            <div class="on-dark p-6">
+              <h3 class="text-3xl">
+                <a href={`/rapitower-rapitruss#${p.data.anchor}`} class="after:absolute after:inset-0">{p.data.name}</a>
+              </h3>
+              <span class="mt-3 block h-1 w-10 bg-field transition-[width] duration-300 ease-out group-hover:w-16"></span>
+              <p class="mt-3 text-[0.95rem] text-white/90">{p.data.summary}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Video -->
+  <section class="bg-mist py-16 md:py-24" aria-labelledby="video-h">
+    <div class="container-x grid items-center gap-12 md:grid-cols-[1fr_380px] lg:grid-cols-[1fr_400px] lg:gap-20">
+      <div class="reveal">
+        <h2 id="video-h" class="text-4xl md:text-5xl">{d.video.heading}</h2>
+        <span class="bar"></span>
+        <p class="mt-6 max-w-lg text-lg text-muted">{d.video.text}</p>
+        <ul class="mt-8 grid max-w-lg gap-3">
+          {d.features.slice(0, 3).map((f) => (
+            <li class="flex items-start gap-3"><Icon name="check" class="mt-1 size-5 shrink-0 text-forest" /><span><strong class="font-semibold">{f.title}.</strong> <span class="text-muted">{f.text}</span></span></li>
+          ))}
+        </ul>
+      </div>
+      <div class="reveal"><VideoFacade video={d.video} /></div>
+    </div>
+  </section>
+
+  <!-- Featured projects -->
+  {projects.length > 0 && (
+    <section class="section" aria-labelledby="projects-h">
+      <div class="container-x">
+        <div class="reveal flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h2 id="projects-h" class="text-4xl md:text-5xl">{d.projectsHeading}</h2>
+            <span class="bar"></span>
+          </div>
+          <a href="/projects" class="link inline-flex min-h-11 items-center gap-2">All projects <Icon name="arrow-right" class="size-4" /></a>
+        </div>
+        <div class="reveal-stagger mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {projects.map((p) => <ProjectCard project={p} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Full service band -->
+  <section class="on-dark slant-top relative bg-deep pt-24 pb-16 text-white md:pt-32 md:pb-24" aria-labelledby="service-h">
+    <div class="container-x grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+      <div class="reveal">
+        <p class="mb-3 text-sm font-semibold tracking-[0.14em] text-field uppercase">Griffin Ag Services</p>
+        <h2 id="service-h" class="text-4xl md:text-5xl">{d.fullService.heading}</h2>
+        <span class="bar"></span>
+        <p class="mt-6 max-w-xl text-lg text-on-dark-muted">{d.fullService.text}</p>
+        <ul class="mt-10 grid gap-8">
+          {d.fullService.items.map((it) => (
+            <li class="flex gap-5">
+              <span class="badge bg-forest ring-2 ring-field/60"><Icon name={it.icon} /></span>
+              <div>
+                <h3 class="text-2xl">{it.title}</h3>
+                <p class="mt-1 text-on-dark-muted">{it.text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <a href={s.installer.url} target="_blank" rel="noopener" class="btn btn-outline text-white" data-cta="home-griffin">Visit {s.installer.name} <Icon name="arrow-right" class="size-5 -rotate-45" /><span class="sr-only"> (opens in a new tab)</span></a>
+          <a href="/about" class="link inline-flex min-h-11 items-center gap-2">About Griffin Ag <Icon name="arrow-right" class="size-4" /></a>
+        </div>
+      </div>
+      <div class="reveal overflow-hidden rounded-[4px]">
+        <Image src={d.fullService.image.src} alt={d.fullService.image.alt} widths={[640, 960, 1280]} sizes="(min-width: 1024px) 50vw, 100vw" class="aspect-[4/3] h-full w-full object-cover" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Canada map band -->
+  <section class="bg-mist py-16 md:py-20" aria-labelledby="map-h">
+    <div class="container-x grid items-center gap-10 md:grid-cols-[1fr_1.1fr]">
+      <div class="reveal order-2 md:order-1">
+        <img src={mapUrl} alt="Map of Canada with Alberta, Saskatchewan and Manitoba highlighted in green" width="978" height="950" loading="lazy" decoding="async" class="mx-auto h-auto w-full max-w-[520px]" />
+        <p class="mt-2 text-center text-xs text-muted">{d.map.credit}</p>
+      </div>
+      <div class="reveal order-1 md:order-2">
+        <span class="badge"><Icon name="truck-trailer" /></span>
+        <h2 id="map-h" class="mt-5 text-4xl text-forest md:text-5xl">{d.map.heading}</h2>
+        <span class="bar"></span>
+        <p class="mt-6 max-w-lg text-lg text-muted">{d.map.text}</p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand heading={d.cta.heading} text={d.cta.text} id="home" />
+</Base>

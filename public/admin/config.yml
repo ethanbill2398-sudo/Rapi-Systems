@@ -1,0 +1,405 @@
+# Decap CMS for RapiSYSTEMS. Edit content at /admin. See README "Editing content".
+backend:
+  name: github
+  repo: ethanbill2398-sudo/Rapi-Systems
+  branch: main
+  base_url: https://SITE_DOMAIN # TODO: your live domain, e.g. https://rapisystems.ca
+  auth_endpoint: api/auth
+  commit_messages:
+    create: 'Content: create {{collection}} "{{slug}}"'
+    update: 'Content: update {{collection}} "{{slug}}"'
+    delete: 'Content: delete {{collection}} "{{slug}}"'
+    uploadMedia: 'Content: upload "{{path}}"'
+    deleteMedia: 'Content: delete "{{path}}"'
+
+local_backend: true # `npm run cms` + `npm run dev` edits files locally without GitHub
+
+site_url: https://SITE_DOMAIN
+logo_url: /rapisystems-logo.png
+media_folder: src/assets/images
+public_folder: ../../assets/images
+slug:
+  encoding: ascii
+  clean_accents: true
+
+# Reusable field definitions
+_image: &image
+  label: Image
+  name: image
+  widget: object
+  collapsed: false
+  fields:
+    - { label: Image file, name: src, widget: image, hint: 'Upload WebP, JPG or PNG. At least 1600px wide for full-width images.' }
+    - { label: Alt text (required), name: alt, widget: string, pattern: ['.{8,}', 'Describe what the image shows in at least 8 characters.'], hint: 'Describe the photo for people who cannot see it, e.g. "Crane lifting a galvanized tower beside grain bins".' }
+
+_seo: &seo
+  label: SEO
+  name: seo
+  widget: object
+  collapsed: true
+  fields:
+    - { label: Meta title, name: title, widget: string, pattern: ['^.{1,60}$', 'Keep under 60 characters.'] }
+    - { label: Meta description, name: description, widget: text, pattern: ['^[\s\S]{1,155}$', 'Keep under 155 characters.'] }
+
+_cta: &cta
+  label: Closing call to action
+  name: cta
+  widget: object
+  collapsed: true
+  fields:
+    - { label: Heading, name: heading, widget: string }
+    - { label: Text, name: text, widget: text }
+
+_icon: &icon
+  label: Icon
+  name: icon
+  widget: select
+  options: [shield-check, wrench, arrows-out, gear-six, grains, truck-trailer, blueprint, hard-hat, crane-tower, stairs, path, nut, package, clock]
+
+_video: &video
+  label: Video
+  name: video
+  widget: object
+  fields:
+    - { label: Title, name: title, widget: string }
+    - { label: Vimeo ID, name: vimeoId, widget: string, pattern: ['^\d+$', 'Numbers only, from the Vimeo URL.'] }
+    - { label: Vimeo privacy hash, name: hash, widget: string, required: false, hint: 'For unlisted videos: the "h=" value from the Vimeo embed code.' }
+    - { label: Shape, name: aspect, widget: select, options: ['16/9', '9/16', '4/3', '1/1'], default: '16/9' }
+    - { <<: *image, label: Poster image, name: poster }
+
+collections:
+  - name: settings
+    label: Site settings
+    files:
+      - label: Business info & announcement bar
+        name: site
+        file: src/content/settings/site.json
+        fields:
+          - { label: Brand name, name: brandName, widget: string }
+          - { label: Company name, name: companyName, widget: string }
+          - { label: Phone (display), name: phone, widget: string }
+          - { label: Phone (dialing, +1 then 10 digits), name: phoneHref, widget: string, pattern: ['^\+\d{11}$', 'Format: +13068738717'] }
+          - { label: Email, name: email, widget: string }
+          - { label: Main office, name: office, widget: string }
+          - { label: Service area, name: serviceArea, widget: string }
+          - { label: Shipping area, name: shippingArea, widget: string }
+          - { label: Facebook URL, name: facebookUrl, widget: string }
+          - label: Announcement bar
+            name: announcement
+            widget: object
+            fields:
+              - { label: Show announcement bar, name: enabled, widget: boolean }
+              - { label: Text, name: text, widget: string }
+              - { label: Link (optional), name: link, widget: string, required: false }
+          - { label: Default social share image (path in /public), name: defaultOgImage, widget: string }
+          - { label: Footer tagline, name: footerTagline, widget: string }
+          - label: Recommended installer (shown on home, product, project and contact pages)
+            name: installer
+            widget: object
+            fields:
+              - { label: Company name, name: name, widget: string }
+              - { label: Website, name: url, widget: string }
+              - { label: Heading, name: heading, widget: string }
+              - { label: Text, name: text, widget: text }
+              - { label: Note (any crew can install), name: note, widget: text }
+
+  - name: pages
+    label: Pages
+    files:
+      - label: Home
+        name: home
+        file: src/content/pages/home.yml
+        fields:
+          - *seo
+          - label: Hero
+            name: hero
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - *image
+          - label: RapiTower / RapiTruss intro
+            name: intro
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Lead, name: lead, widget: text }
+              - { label: Body, name: body, widget: text }
+              - *image
+          - label: Feature badges
+            name: features
+            widget: list
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: text, widget: string }
+              - *icon
+          - label: Stats (animated counters)
+            name: stats
+            widget: list
+            fields:
+              - { label: Number, name: value, widget: number, value_type: int }
+              - { label: Suffix (e.g. + or ft), name: suffix, widget: string, required: false }
+              - { label: Label, name: label, widget: string }
+          - { label: Products heading, name: productsHeading, widget: string }
+          - label: Video
+            name: video
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Text, name: text, widget: text }
+              - { label: Title, name: title, widget: string }
+              - { label: Vimeo ID, name: vimeoId, widget: string }
+              - { label: Vimeo privacy hash, name: hash, widget: string, required: false }
+              - { label: Shape, name: aspect, widget: select, options: ['16/9', '9/16', '4/3', '1/1'] }
+              - { <<: *image, label: Poster image, name: poster }
+          - { label: Projects heading, name: projectsHeading, widget: string }
+          - label: Full service band
+            name: fullService
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Text, name: text, widget: text }
+              - label: Items
+                name: items
+                widget: list
+                fields:
+                  - { label: Title, name: title, widget: string }
+                  - { label: Text, name: text, widget: text }
+                  - *icon
+              - *image
+          - label: Canada map band
+            name: map
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Text, name: text, widget: text }
+              - { label: Map credit (required by licence), name: credit, widget: string }
+          - *cta
+
+      - label: About
+        name: about
+        file: src/content/pages/about.yml
+        fields:
+          - *seo
+          - label: Hero
+            name: hero
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - *image
+          - label: Story
+            name: story
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Body, name: body, widget: text }
+              - *image
+              - { <<: *image, label: Griffin Ag logo, name: logo }
+          - label: Vision
+            name: vision
+            widget: object
+            fields: [{ label: Heading, name: heading, widget: string }, { label: Text, name: text, widget: text }]
+          - label: Approach
+            name: approach
+            widget: object
+            fields: [{ label: Heading, name: heading, widget: string }, { label: Text, name: text, widget: text }]
+          - label: Expertise
+            name: expertise
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Text, name: text, widget: text }
+              - *image
+          - label: Services
+            name: services
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Text, name: text, widget: text }
+              - label: Items
+                name: items
+                widget: list
+                fields:
+                  - { label: Title, name: title, widget: string }
+                  - { label: Text, name: text, widget: text }
+                  - *icon
+                  - *image
+          - *cta
+
+      - label: RapiTower & RapiTruss (product & engineering)
+        name: product
+        file: src/content/pages/product.yml
+        fields:
+          - *seo
+          - label: Hero
+            name: hero
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - *image
+          - label: How the system works
+            name: system
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Body, name: body, widget: text }
+              - *image
+              - label: Points
+                name: points
+                widget: list
+                fields: [{ label: Title, name: title, widget: string }, { label: Text, name: text, widget: text }, *icon]
+          - label: Step diagram
+            name: steps
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - label: Steps
+                name: items
+                widget: list
+                fields: [{ label: Title, name: title, widget: string }, { label: Text, name: text, widget: text }, *icon]
+          - label: Bolted vs welded
+            name: comparison
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Text, name: text, widget: text }
+              - label: Rows
+                name: rows
+                widget: list
+                fields:
+                  - { label: Factor, name: label, widget: string }
+                  - { label: Bolted (RapiSYSTEMS), name: bolted, widget: string }
+                  - { label: Welded, name: welded, widget: string }
+          - label: Specifications
+            name: specs
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Note, name: note, widget: text }
+              - label: Spec groups
+                name: groups
+                widget: list
+                hint: 'Text in [SPEC: ...] shows as a yellow placeholder on the site. Replace it with the confirmed value.'
+                fields:
+                  - { label: Group title, name: title, widget: string }
+                  - label: Rows
+                    name: rows
+                    widget: list
+                    fields: [{ label: Label, name: label, widget: string }, { label: Value, name: value, widget: string }]
+              - label: Downloads
+                name: downloads
+                widget: list
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: File, name: file, widget: file, media_folder: /public/downloads, public_folder: /downloads }
+                  - { label: Format (e.g. PDF), name: format, widget: string }
+                  - { label: Size (e.g. 1.2 MB), name: size, widget: string, required: false }
+          - label: FAQ
+            name: faq
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - label: Questions
+                name: items
+                widget: list
+                fields: [{ label: Question, name: question, widget: string }, { label: Answer, name: answer, widget: text }]
+          - *cta
+
+      - label: Projects page
+        name: projects
+        file: src/content/pages/projects.yml
+        fields:
+          - *seo
+          - { label: Heading, name: heading, widget: string }
+          - { label: Intro, name: intro, widget: text }
+          - *cta
+
+      - label: Contact / Request a quote
+        name: contact
+        file: src/content/pages/contact.yml
+        fields:
+          - *seo
+          - { label: Heading, name: heading, widget: string }
+          - { label: Intro, name: intro, widget: text }
+          - *image
+          - { label: Success heading, name: successHeading, widget: string }
+          - { label: Success text, name: successText, widget: text }
+          - { label: Timeline options, name: timelines, widget: list, field: { label: Option, name: option, widget: string } }
+
+      - label: Privacy policy
+        name: privacy
+        file: src/content/pages/privacy.md
+        fields:
+          - { label: Heading, name: heading, widget: string }
+          - { label: Last updated, name: updated, widget: string }
+          - *seo
+          - { label: Body, name: body, widget: markdown }
+
+      - label: Terms & conditions
+        name: terms
+        file: src/content/pages/terms.md
+        fields:
+          - { label: Heading, name: heading, widget: string }
+          - { label: Last updated, name: updated, widget: string }
+          - *seo
+          - { label: Body, name: body, widget: markdown }
+
+  - name: products
+    label: Products
+    folder: src/content/products
+    create: true
+    extension: md
+    slug: '{{slug}}'
+    summary: '{{name}}'
+    sortable_fields: [order, name]
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Order, name: order, widget: number, value_type: int }
+      - { label: Anchor (URL fragment, lowercase-with-dashes), name: anchor, widget: string, pattern: ['^[a-z0-9-]+$', 'Lowercase letters, numbers and dashes only.'] }
+      - { label: Summary (card text), name: summary, widget: text, pattern: ['^[\s\S]{1,200}$', 'Keep under 200 characters.'] }
+      - *image
+      - { label: Highlights, name: highlights, widget: list, field: { label: Highlight, name: highlight, widget: string } }
+      - { label: Search engine description, name: schemaDescription, widget: text }
+      - { label: Description, name: body, widget: markdown }
+
+  - name: projects
+    label: Projects
+    folder: src/content/projects
+    create: true
+    extension: md
+    slug: '{{slug}}'
+    summary: '{{title}} ({{category}})'
+    sortable_fields: [order, title]
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Order (1 shows first; the first 3 appear on the home page), name: order, widget: number, value_type: int }
+      - { label: Hide (draft), name: draft, widget: boolean, default: false }
+      - { label: Location (town, province), name: location, widget: string }
+      - label: Type
+        name: category
+        widget: select
+        options:
+          - { label: Towers, value: towers }
+          - { label: Catwalks, value: catwalks }
+          - { label: Stairs, value: stairs }
+          - { label: Full systems, value: full-systems }
+      - { label: Scope, name: scope, widget: string }
+      - { label: Summary (card text), name: summary, widget: text, pattern: ['^[\s\S]{1,200}$', 'Keep under 200 characters.'] }
+      - { <<: *image, label: Cover image, name: cover }
+      - label: Gallery
+        name: gallery
+        widget: list
+        required: false
+        fields:
+          - { label: Image file, name: src, widget: image }
+          - { label: Alt text (required), name: alt, widget: string, pattern: ['.{8,}', 'Describe what the image shows in at least 8 characters.'] }
+      - { <<: *video, required: false }
+      - label: SEO
+        name: seo
+        widget: object
+        fields:
+          - { label: Meta title, name: title, widget: string, pattern: ['^.{1,60}$', 'Keep under 60 characters.'] }
+          - { label: Meta description, name: description, widget: text, pattern: ['^[\s\S]{1,155}$', 'Keep under 155 characters.'] }
+      - { label: Write-up, name: body, widget: markdown }
