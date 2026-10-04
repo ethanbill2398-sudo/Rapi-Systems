@@ -376,7 +376,7 @@ collections:
       - { label: Title, name: title, widget: string }
       - { label: Order (1 shows first; the first 3 appear on the home page), name: order, widget: number, value_type: int }
       - { label: Hide (draft), name: draft, widget: boolean, default: false }
-      - { label: Location (town, province), name: location, widget: string }
+      - { label: Location (town, province), name: location, widget: string, required: false }
       - label: Type
         name: category
         widget: select
@@ -388,6 +388,7 @@ collections:
       - { label: Scope, name: scope, widget: string }
       - { label: Summary (card text), name: summary, widget: text, pattern: ['^[\s\S]{1,200}$', 'Keep under 200 characters.'] }
       - { <<: *image, label: Cover image, name: cover }
+      - { <<: *image, label: Card image (optional; shown on project cards instead of the cover), name: card, required: false }
       - label: Gallery
         name: gallery
         widget: list

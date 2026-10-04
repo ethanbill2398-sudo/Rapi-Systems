@@ -2,12 +2,12 @@
 name: "Wrap-Around Stairs"
 order: 3
 anchor: "wrap-around-stairs"
-summary: "Switchback stairs that wrap a RapiTower for safe access to the head section and catwalks."
+summary: "Stairs that wrap a RapiTower for safe access to the head section and catwalks."
 image:
-  src: ../../assets/images/stair-tower-catwalk-truss-assembly.webp
-  alt: "Galvanized stair tower with switchback stairs and landings beside grain bins"
+  src: ../../assets/images/wrap-around-stairs-tower-low-angle.jpg
+  alt: "Looking up a galvanized RapiTower with wrap-around stairs and landings between a grain bin and a hopper tank"
 highlights:
-  - "Adds to any RapiTower"
+  - "Adds to RapiTower"
   - "Landings at each level"
   - "Galvanized, bolted construction"
 schemaDescription: "Galvanized bolt-together wrap-around stair system for grain leg support towers."

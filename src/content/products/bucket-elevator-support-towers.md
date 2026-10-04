@@ -5,9 +5,10 @@ anchor: "bucket-elevator-support-towers"
 summary: "Square RapiTower grain leg towers that carry the bucket elevator, head section and spouting."
 image:
   src: ../../assets/images/bucket-elevator-tower-hopper-bin-blue-sky.webp
-  alt: "RapiTower bucket elevator support tower with guyed spouting next to a large grain bin"
+  alt: "RapiTower bucket elevator support tower with spouting next to a large grain bin"
 highlights:
-  - "Heights configured in 5 ft increments"
+  - "Various widths"
+  - "Custom heights available"
   - "Attachments on any side, at any height"
   - "Optional wrap-around stairs"
 schemaDescription: "Galvanized, fully bolted bucket elevator (grain leg) support tower built from common structural steel pieces."

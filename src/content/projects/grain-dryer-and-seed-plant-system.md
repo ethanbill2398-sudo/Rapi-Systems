@@ -1,6 +1,7 @@
 ---
 title: "Grain dryer and seed plant system"
 order: 4
+draft: true # Hidden for now; moving to the Griffin Ag website
 location: "[PROJECT: town, province TBD]"
 category: full-systems
 scope: "Design, equipment supply and installation by Griffin Ag Services [PROJECT: confirm scope]"

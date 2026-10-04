@@ -7,7 +7,7 @@ image:
   src: ../../assets/images/grain-yard-support-tower-catwalk-bins.webp
   alt: "Grain yard with galvanized support towers carrying catwalks and conveyors between bins"
 highlights:
-  - "Supports placed at nearly any point along a catwalk"
+  - "Supports placed anywhere along a catwalk"
   - "Same common pieces as RapiTower"
   - "Fast to stand without custom structure"
 schemaDescription: "Galvanized bolt-together 2-post support tower for catwalks and conveyors on grain bin sites."

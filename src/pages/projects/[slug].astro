@@ -46,7 +46,7 @@ const og = await getImage({ src: p.cover.src, width: 1200, height: 630, fit: 'co
         <span class="bar"></span>
         <dl class="mt-8 grid gap-6 sm:grid-cols-3">
           <div><dt class="text-sm font-semibold tracking-wide text-muted uppercase">Type</dt><dd class="mt-1 text-lg">{projectCategories[p.category]}</dd></div>
-          <div><dt class="text-sm font-semibold tracking-wide text-muted uppercase">Location</dt><dd class="mt-1 text-lg" set:html={flagPlaceholders(p.location)} /></div>
+          {p.location && <div><dt class="text-sm font-semibold tracking-wide text-muted uppercase">Location</dt><dd class="mt-1 text-lg" set:html={flagPlaceholders(p.location)} /></div>}
           <div><dt class="text-sm font-semibold tracking-wide text-muted uppercase">Scope</dt><dd class="mt-1 text-lg" set:html={flagPlaceholders(p.scope)} /></div>
         </dl>
       </div>

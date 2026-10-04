@@ -5,11 +5,11 @@ hero:
   heading: "RapiTower & RapiTruss"
   subheading: "A bolted structural system for grain leg towers, catwalks and stairs."
   image:
-    src: ../../assets/images/stair-tower-catwalk-truss-assembly.webp
-    alt: "Stair tower with switchback stairs beside grain bins while catwalk truss sections are assembled on the ground"
+    src: ../../assets/images/rapitower-tower-spouting-truck-blue-sky.jpg
+    alt: "Galvanized RapiTower grain leg tower with spouting and a bridge conveyor over a bin yard, grain truck below"
 system:
   heading: "How the bolted system works"
-  body: "RapiSYSTEMS elements are fabricated from heavy galvanized structural steel sections with a minimum of welded or custom sheet metal parts. A small set of common pieces bolts together in thousands of configurations, from small bins to very large bins and equipment, so each structure is configured to order without being custom-built from scratch."
+  body: "RapiSYSTEMS elements are fabricated from structural steel, then galvanized. With zero welding, the common pieces bolt together in tower, catwalk, stair and platform configurations."
   image:
     src: ../../assets/images/rapitower-rapitruss-component-drawing.webp
     alt: "3D line drawing of the RapiTower and RapiTruss system showing towers, 2-post frames and catwalk sections"
@@ -18,7 +18,7 @@ system:
       text: "Standard steel sections repeat across every tower and truss, which keeps unique pieces to a minimum."
       icon: stairs
     - title: "Fully bolted connections"
-      text: "Members bolt together on site. Welding is practically eliminated from the project."
+      text: "Members bolt together on site. Welding is eliminated from the project."
       icon: nut
     - title: "Galvanized finish"
       text: "Every piece is galvanized for durability and corrosion resistance in prairie weather."
@@ -55,7 +55,7 @@ comparison:
       bolted: "General crew with hand and power tools"
       welded: "Certified welders and fitters on site"
     - label: "Site welding"
-      bolted: "Practically none"
+      bolted: "None"
       welded: "Hot work on site near grain and dust"
     - label: "Retrofitting existing bins"
       bolted: "Add a catwalk or conveyor to the bins you have"
@@ -72,9 +72,7 @@ specs:
         - label: "Minimum size"
           value: "6 ft wide x 20 ft tall"
         - label: "Maximum size"
-          value: "[SPEC: max tower width TBD] wide x 160 ft tall"
-        - label: "Increments"
-          value: "5 ft"
+          value: "12 ft wide x 160 ft tall"
         - label: "Options"
           value: "Wrap-around stairs, attachments on any side at any height"
     - title: "RapiTruss"
@@ -86,7 +84,7 @@ specs:
         - label: "Bin spans"
           value: "Bins up to 90 ft diameter, any combination of sizes and heights"
         - label: "Walkway widths"
-          value: "[SPEC: catwalk widths TBD]"
+          value: "6 ft 6 in wide"
     - title: "Materials & engineering"
       rows:
         - label: "Material"
@@ -96,7 +94,7 @@ specs:
         - label: "Load ratings"
           value: "[SPEC: load ratings TBD]"
         - label: "Certifications"
-          value: "[SPEC: certifications / engineering stamp TBD]"
+          value: "Engineered"
   downloads:
     - label: "Support towers & catwalks flyer"
       file: /downloads/rapisystems-support-towers-catwalks-flyer.jpg
@@ -114,11 +112,11 @@ faq:
   heading: "Frequently asked questions"
   items:
     - question: "Does a RapiSYSTEMS tower need welding on site?"
-      answer: "No. RapiTower and RapiTruss are fully bolted systems built from common structural steel pieces, which practically eliminates welding from a bin access project."
+      answer: "No. RapiTower and RapiTruss are fully bolted systems built from common structural steel pieces, which eliminates welding from a bin access project."
     - question: "Can I add a catwalk to my existing grain bins?"
       answer: "Yes. RapiSYSTEMS was designed so farms can economically add a catwalk or conveyor system to an existing bin setup without specialized custom structure or long fabrication and install times."
     - question: "What sizes are RapiTower grain leg towers available in?"
-      answer: "According to the RapiSYSTEMS brochure, towers range from 6 ft wide by 20 ft tall up to 160 ft tall, in 5 ft increments. Contact us to confirm sizes for your site."
+      answer: "According to the RapiSYSTEMS brochure, towers range from 6 ft wide by 20 ft tall up to 12 ft wide by 160 ft tall, in various widths, with custom heights available. Contact us to confirm sizes for your site."
     - question: "How long can a RapiTruss catwalk be?"
       answer: "RapiTruss catwalks and equipment supports can be configured to any required length in 5 ft increments, up to 400 ft, with supports placed at nearly any point along the length."
     - question: "Can stairs be added to a tower?"
