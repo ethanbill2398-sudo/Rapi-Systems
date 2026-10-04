@@ -3,11 +3,12 @@ import Image from './Img.astro';
 import type { ImageMetadata } from 'astro';
 interface Props { heading: string; subheading?: string; image: { src: ImageMetadata; alt: string }; eyebrow?: string }
 const { heading, subheading, image, eyebrow } = Astro.props;
-// A phone-portrait photo stretched across a wide banner gets cropped to a blurry strip.
-// On wider screens, show tall photos whole in a panel beside the heading instead.
+// A phone-portrait photo stretched across a wide banner gets cropped to a zoomed, blurry strip.
+// On wider screens, tall photos fill only the right part of the banner and fade into the
+// background behind the heading, so they stay sharp and far less zoomed.
 const tall = image.src.width / image.src.height < 0.8;
 ---
-<section class="on-dark relative isolate overflow-hidden bg-deep text-white">
+<section class:list={['on-dark relative isolate overflow-hidden bg-deep text-white', tall && 'md:flex md:min-h-[36rem] md:items-center lg:min-h-[40rem]']}>
   <Image
     src={image.src}
     alt={image.alt}
@@ -19,7 +20,20 @@ const tall = image.src.width / image.src.height < 0.8;
     class:list={['parallax absolute inset-0 -z-10 h-full w-full object-cover', tall && 'md:hidden']}
   />
   <div aria-hidden="true" class:list={['absolute inset-0 -z-10 bg-gradient-to-r from-deep/95 via-deep/75 to-deep/20', tall && 'md:hidden']}></div>
-  <div class:list={['container-x py-20 md:py-28', tall && 'md:flex md:items-center md:justify-between md:gap-12 md:py-16']}>
+  {tall && (
+    <div aria-hidden="true" class="hero-fade absolute inset-y-0 right-0 -z-10 hidden w-[52%] md:block lg:w-[42%] lg:max-w-[620px]">
+      <Image
+        src={image.src}
+        alt=""
+        widths={[640, 960, 1170]}
+        sizes="(min-width: 1024px) 42vw, 52vw"
+        quality={80}
+        loading="eager"
+        class="parallax h-full w-full object-cover object-[50%_62%]"
+      />
+    </div>
+  )}
+  <div class:list={['container-x py-20 md:py-28', tall && 'md:w-full']}>
     <div class="max-w-2xl">
       {eyebrow && <p class="mb-3 text-sm font-semibold tracking-[0.14em] text-field uppercase">{eyebrow}</p>}
       <h1 class="text-5xl md:text-6xl lg:text-7xl">{heading}</h1>
@@ -27,17 +41,15 @@ const tall = image.src.width / image.src.height < 0.8;
       {subheading && <p class="mt-5 max-w-xl text-lg text-white/90 md:text-xl">{subheading}</p>}
       <slot />
     </div>
-    {tall && (
-      <Image
-        src={image.src}
-        alt=""
-        aria-hidden="true"
-        widths={[400, 600, 800]}
-        sizes="(min-width: 1024px) 300px, 260px"
-        quality={80}
-        loading="eager"
-        class="hidden h-[34rem] w-auto shrink-0 rounded-[4px] object-contain shadow-2xl md:block lg:h-[38rem]"
-      />
-    )}
   </div>
 </section>
+
+<style>
+  /* Photo fades in from the dark background behind the heading, and slightly at the bottom. */
+  .hero-fade {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 40%), linear-gradient(to top, transparent, #000 14%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right, transparent, #000 40%), linear-gradient(to top, transparent, #000 14%);
+    mask-composite: intersect;
+  }
+</style>
