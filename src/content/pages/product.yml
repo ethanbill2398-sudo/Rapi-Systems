@@ -100,14 +100,10 @@ specs:
       file: /downloads/rapisystems-support-towers-catwalks-flyer.jpg
       format: JPG
       size: "450 KB"
-    - label: "RapiSYSTEMS brochure, outside"
-      file: /downloads/rapisystems-brochure-trifold-outside.jpg
-      format: JPG
-      size: "190 KB"
-    - label: "RapiSYSTEMS brochure, inside"
-      file: /downloads/rapisystems-brochure-trifold-inside.jpg
-      format: JPG
-      size: "215 KB"
+    - label: "RapiSYSTEMS brochure"
+      file: /downloads/rapisystems-brochure.pdf
+      format: PDF
+      size: "1.6 MB"
 faq:
   heading: "Frequently asked questions"
   items:

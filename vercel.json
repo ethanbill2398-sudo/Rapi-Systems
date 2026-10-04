@@ -69,6 +69,16 @@
   ],
   "redirects": [
     {
+      "source": "/downloads/rapisystems-brochure-trifold-outside.jpg",
+      "destination": "/downloads/rapisystems-brochure.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/downloads/rapisystems-brochure-trifold-inside.jpg",
+      "destination": "/downloads/rapisystems-brochure.pdf",
+      "permanent": true
+    },
+    {
       "source": "/rapisystems",
       "destination": "/rapitower-rapitruss",
       "permanent": true
