@@ -1,5 +1,5 @@
 ---
-// Recruits Canadian retailers/dealers; links to the contact form with "Becoming a retailer" pre-ticked.
+// Recruits Canadian retailers/dealers; links to the contact form.
 import Icon from './Icon.astro';
 import { getSettings } from '../lib/site';
 interface Props { id?: string }
@@ -14,6 +14,6 @@ const { retailer: r } = await getSettings();
       <h2 id={`${id}-h`} class="text-3xl md:text-4xl">{r.heading}</h2>
       <p class="mt-3 max-w-2xl text-lg text-white/90">{r.text}</p>
     </div>
-    <a href="/contact?interest=retailer" class="btn btn-primary" data-cta={id}>{r.button} <Icon name="arrow-right" class="size-5" /></a>
+    <a href="/contact" class="btn btn-primary" data-cta={id}>{r.button} <Icon name="arrow-right" class="size-5" /></a>
   </div>
 </section>
