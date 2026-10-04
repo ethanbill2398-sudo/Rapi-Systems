@@ -50,6 +50,7 @@ const settings = defineCollection({
       announcement: z.object({ enabled: z.boolean(), text: z.string(), link: z.string().optional() }),
       defaultOgImage: z.string(),
       footerTagline: z.string(),
+      retailer: z.object({ heading: z.string(), text: z.string(), button: z.string() }),
       installer: z.object({
         name: z.string(),
         url: z.url(),
@@ -191,6 +192,7 @@ const projects = defineCollection({
       card: pic(image).optional(),
       gallery: z.array(pic(image)).default([]),
       video: video(image).optional(),
+      clip: z.object({ title: z.string(), file: z.string(), poster: z.string() }).optional(),
       seo: z.object({ title: z.string().max(60), description: z.string().max(155) }),
     }),
 });

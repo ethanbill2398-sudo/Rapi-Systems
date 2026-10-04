@@ -1,0 +1,19 @@
+---
+// Recruits Canadian retailers/dealers; links to the contact form with "Becoming a retailer" pre-ticked.
+import Icon from './Icon.astro';
+import { getSettings } from '../lib/site';
+interface Props { id?: string }
+const { id = 'retailer' } = Astro.props;
+const { retailer: r } = await getSettings();
+---
+<section class="reveal on-dark relative overflow-hidden rounded-[4px] bg-forest text-white" aria-labelledby={`${id}-h`}>
+  <span aria-hidden="true" class="absolute inset-y-0 left-0 w-1.5 bg-field"></span>
+  <div class="grid gap-6 p-6 pl-8 md:grid-cols-[auto_1fr_auto] md:items-center md:gap-8 md:p-8 md:pl-10">
+    <span class="badge size-16 bg-deep ring-2 ring-field/60"><Icon name="package" class="size-8" /></span>
+    <div>
+      <h2 id={`${id}-h`} class="text-3xl md:text-4xl">{r.heading}</h2>
+      <p class="mt-3 max-w-2xl text-lg text-white/90">{r.text}</p>
+    </div>
+    <a href="/contact?interest=retailer" class="btn btn-primary" data-cta={id}>{r.button} <Icon name="arrow-right" class="size-5" /></a>
+  </div>
+</section>

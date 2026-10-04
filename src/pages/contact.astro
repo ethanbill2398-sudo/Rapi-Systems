@@ -184,4 +184,10 @@ const input = 'mt-2 block w-full min-h-12 rounded-[2px] border border-muted/60 b
 <script>
   import { initQuoteForm } from '../scripts/quote-form';
   initQuoteForm();
+  // Links like /contact?interest=retailer pre-tick that interest.
+  const interest = new URLSearchParams(location.search).get('interest');
+  if (interest) {
+    const box = document.querySelector<HTMLInputElement>(`input[name="interests"][value="${CSS.escape(interest)}"]`);
+    if (box) box.checked = true;
+  }
 </script>

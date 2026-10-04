@@ -17,4 +17,5 @@ export const productInterests = [
   { value: 'stairs', label: 'Wrap-around stairs' },
   { value: 'catwalk', label: 'Catwalk' },
   { value: 'full-system', label: 'Full system' },
+  { value: 'retailer', label: 'Becoming a retailer' },
 ] as const;

@@ -17,7 +17,7 @@ const Quote = z.object({
   phone: z.string().trim().max(40).regex(/^[\d\s()+.-]*$/, 'Please enter a valid phone number.').optional().default(''),
   province: z.enum(provinces, 'Please choose a province or territory from the list.').or(z.literal('')).optional().default(''),
   town: z.string().trim().max(100).optional().default(''),
-  interests: z.array(z.enum(productInterests.map((p) => p.value) as [string, ...string[]])).max(5).default([]),
+  interests: z.array(z.enum(productInterests.map((p) => p.value) as [string, ...string[]])).max(productInterests.length).default([]),
   install: z.enum(installOptions.map((o) => o.value) as [string, ...string[]]).optional().default('unsure'),
   timeline: z.string().trim().max(60).optional().default(''),
   message: z.string().trim().max(5000).optional().default(''),

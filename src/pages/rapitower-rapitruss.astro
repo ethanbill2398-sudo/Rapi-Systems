@@ -1,11 +1,13 @@
 ---
 import Image from '../components/Img.astro';
+import Framed from '../components/Framed.astro';
 import { getEntry, getCollection, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Icon from '../components/Icon.astro';
 import CtaBand from '../components/CtaBand.astro';
 import InstallerCallout from '../components/InstallerCallout.astro';
+import RetailerCallout from '../components/RetailerCallout.astro';
 import { flagPlaceholders } from '../lib/site';
 import { breadcrumbs, faqPage, product } from '../lib/schema';
 
@@ -67,7 +69,7 @@ const schema = [
       <div class="mt-12 grid gap-6 md:grid-cols-2">
         {products.map(({ data: p, Content }) => (
           <article id={p.anchor} class="reveal scroll-mt-28 overflow-hidden rounded-[4px] bg-white">
-            <Image src={p.image.src} alt={p.image.alt} widths={[480, 720, 960]} sizes="(min-width: 768px) 50vw, 100vw" class="aspect-[16/10] w-full object-cover" />
+            <Framed image={p.image} aspect={16 / 10} widths={[480, 720, 960, 1280]} sizes="(min-width: 768px) 50vw, 100vw" class="aspect-[16/10] w-full bg-mist" />
             <div class="p-6 md:p-8">
               <h3 class="text-3xl text-forest">{p.name}</h3>
               <span class="bar w-10"></span>
@@ -109,6 +111,7 @@ const schema = [
   <!-- Recommended installer -->
   <div class="container-x -mt-10 relative md:-mt-16">
     <InstallerCallout id="product-installer" />
+    <div class="mt-6"><RetailerCallout id="product-retailer" /></div>
   </div>
 
   <!-- Bolted vs welded -->

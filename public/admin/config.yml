@@ -93,6 +93,13 @@ collections:
               - { label: Link (optional), name: link, widget: string, required: false }
           - { label: Default social share image (path in /public), name: defaultOgImage, widget: string }
           - { label: Footer tagline, name: footerTagline, widget: string }
+          - label: Retailer callout (shown on home and product pages)
+            name: retailer
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Text, name: text, widget: text }
+              - { label: Button text, name: button, widget: string }
           - label: Recommended installer (shown on home, product, project and contact pages)
             name: installer
             widget: object
@@ -397,6 +404,14 @@ collections:
           - { label: Image file, name: src, widget: image }
           - { label: Alt text (required), name: alt, widget: string, pattern: ['.{8,}', 'Describe what the image shows in at least 8 characters.'] }
       - { <<: *video, required: false }
+      - label: Uploaded video clip (MP4, plays on the site; optional)
+        name: clip
+        widget: object
+        required: false
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: MP4 file, name: file, widget: file, media_folder: /public/videos, public_folder: /videos }
+          - { label: Poster image (first frame), name: poster, widget: image, media_folder: /public/videos, public_folder: /videos }
       - label: SEO
         name: seo
         widget: object
